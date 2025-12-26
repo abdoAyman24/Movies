@@ -1,6 +1,9 @@
 import 'dart:developer';
 
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:movies/core/error/custom_fire_base_excption.dart';
 
 class FireBaseAuthService {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
@@ -19,18 +22,29 @@ class FireBaseAuthService {
       return credential.user!;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        throw CustomException(error: 'The password provided is too weak.');
+        throw CustomFireBaseExcption(
+          errorMessage: 'The password provided is too weak.',
+        );
       } else if (e.code == 'email-already-in-use') {
-        throw CustomException(
-          error: 'The account already exists for that email.',
+        throw CustomFireBaseExcption(
+          errorMessage: 'The account already exists for that email.',
         );
       } else if (e.code == 'network-request-failed') {
-        throw CustomException(error: 'check connection the intenet');
+        throw CustomFireBaseExcption(
+          errorMessage: 'check connection the intenet',
+        );
+      } else if (e.code == 'invalid-email') {
+        throw CustomFireBaseExcption(
+          errorMessage: 'The email address is badly formatted.',
+        );
       } else {
-        throw CustomException(error: 'there is problem,try again later');
+        log(e.toString());
+        throw CustomFireBaseExcption(
+          errorMessage: 'there is problem,try again later ${e.toString()}',
+        );
       }
     } catch (e) {
-      throw CustomException(error: e.toString());
+      throw CustomFireBaseExcption(errorMessage: e.toString());
     }
   }
 
@@ -46,15 +60,22 @@ class FireBaseAuthService {
       return credential.user!;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        throw CustomException(error: 'User Or Password not Correct.');
+        throw CustomFireBaseExcption(
+          errorMessage: 'User Or Password not Correct.',
+        );
       } else if (e.code == 'wrong-password') {
-        throw CustomException(error: 'User Or Password not Correct.');
+        throw CustomFireBaseExcption(
+          errorMessage: 'User Or Password not Correct.',
+        );
       } else if (e.code == 'invalid-credential') {
-        throw CustomException(error: 'User Or Password not Correct.');
+        throw CustomFireBaseExcption(
+          errorMessage: 'User Or Password not Correct.',
+        );
       } else {
         log(e.toString());
-        throw CustomException(
-          error: 'this is A problem,please try again later${e.credential}',
+        throw CustomFireBaseExcption(
+          errorMessage:
+              'this is A problem,please try again later${e.credential}',
         );
       }
     }
@@ -65,7 +86,7 @@ class FireBaseAuthService {
     final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
 
     if (googleUser == null) {
-      throw CustomException(error: 'تم إلغاء تسجيل الدخول');
+      throw CustomFireBaseExcption(errorMessage: 'تم إلغاء تسجيل الدخول');
     }
 
     // 2️⃣ الحصول على التوكين من Google
@@ -82,31 +103,13 @@ class FireBaseAuthService {
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
-// Future<void> signInWithFacebook() async {
-//   try {
-//     final LoginResult result = await FacebookAuth.instance.login();
-//     if (result.status == LoginStatus.success) {
-//       // نجح التسجيل، احصل على accessToken
-//       final AccessToken accessToken = result.accessToken!;
-//       // ربطه بـ Firebase Auth
-//       final OAuthCredential credential = FacebookAuthProvider.credential(accessToken.token);
-//       await FirebaseAuth.instance.signInWithCredential(credential);
-//     } else {
-//       print('Facebook login failed: ${result.message}');
-//     }
-//   } catch (e) {
-//     print('Error: $e');
-//   }
-// }
-
   Future<UserCredential> signInWithFacebook() async {
     // Trigger the sign-in flow
     final LoginResult loginResult = await FacebookAuth.instance.login();
-    
 
     // Create a credential from the access token
     final OAuthCredential facebookAuthCredential =
-        FacebookAuthProvider.credential(loginResult.accessToken!.tokenString);
+        FacebookAuthProvider.credential(loginResult.accessToken!.token);
 
     // Once signed in, return the UserCredential
     return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);

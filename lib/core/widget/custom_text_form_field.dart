@@ -12,6 +12,8 @@ class CustomTextForm extends StatefulWidget {
     required this.keyboardType,
     required this.textFormColor,
     required this.preffixIcon,
+    this.confirmPassword,
+     this.textEditingController,
   });
 
   final String hint;
@@ -20,7 +22,9 @@ class CustomTextForm extends StatefulWidget {
   final bool showSuffixIcon;
   final TextInputType keyboardType;
   final Color textFormColor;
-
+  
+  final TextEditingController? confirmPassword;
+  final TextEditingController? textEditingController;
   @override
   State<CustomTextForm> createState() => _CustomTextFormState();
 }
@@ -37,10 +41,16 @@ class _CustomTextFormState extends State<CustomTextForm> {
         children: [
           const SizedBox(height: 8),
           TextFormField(
+            controller: widget.textEditingController,
             onChanged: widget.onSave,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Field is Empty ';
+              }
+              if (widget.confirmPassword != null) {
+                if (value != widget.confirmPassword!.text) {
+                  return 'Passwords do not match.';
+                }
               }
               return null;
             },

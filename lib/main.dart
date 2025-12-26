@@ -1,16 +1,26 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movies/conatant.dart';
+import 'package:movies/core/cache/cach_helper_with_secure.dart';
 import 'package:movies/core/helper/on_generate_route.dart';
 import 'package:movies/core/service/service_locator.dart';
 import 'package:movies/core/utils/AppTheme.dart';
+import 'package:movies/feature/auth/domain/repo/auth_repo.dart';
+import 'package:movies/feature/auth/presentation/manager/cubit/auth_cubit.dart';
+import 'package:movies/feature/home/presentation/view/home.dart';
 import 'package:movies/feature/on_bording/presentation/view/on_bording.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:movies/firebase_options.dart';
 import 'package:movies/generated/l10n.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await CacheHelper.init();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   setUpGetIt();
-  await ScreenUtil.ensureScreenSize();
+  //  await ScreenUtil.ensureScreenSize();
   runApp(const MyApp());
 }
 
@@ -22,18 +32,22 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(192, 245),
       builder: (context, child) {
-        return MaterialApp(
-          localizationsDelegates: [
-            S.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: S.delegate.supportedLocales,
-          title: 'Movies',
-          theme: appTheme,
-          onGenerateRoute: onGenerateRoute,
-          initialRoute: OnBording.routeName,
+        return BlocProvider(
+          create: (context) => AuthCubit(getIt.get<AuthRepo>()),
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            localizationsDelegates: [
+              S.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: S.delegate.supportedLocales,
+            title: 'Movies',
+            theme: appTheme,
+            onGenerateRoute: onGenerateRoute,
+            initialRoute:CacheHelper.getString(key: KUserData)!=null?Home.routeName: OnBording.routeName,
+          ),
         );
       },
     );
