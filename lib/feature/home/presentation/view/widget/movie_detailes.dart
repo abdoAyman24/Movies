@@ -1,13 +1,17 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:movies/core/utils/app_color.dart';
+import 'package:movies/core/service/service_locator.dart';
 import 'package:movies/core/utils/app_text_styles.dart';
-import 'package:movies/core/utils/end_point.dart';
-import 'package:movies/core/widget/custom_back_ground.dart';
+import 'package:movies/feature/home/data/data_source/home_remote_data_source.dart';
 import 'package:movies/feature/home/domain/entity/movie_entity.dart';
+import 'package:movies/feature/home/presentation/manager/recommend_movie_cubit/recommend_movies_cubit.dart';
 import 'package:movies/feature/home/presentation/view/widget/back_bottom.dart';
-import 'package:movies/feature/home/presentation/view/widget/star.dart';
+import 'package:movies/feature/home/presentation/view/widget/movie_back_ground_image.dart';
+import 'package:movies/feature/home/presentation/view/widget/movie_data.dart';
+import 'package:movies/feature/home/presentation/view/widget/movie_data_back_ground.dart';
+import 'package:movies/feature/home/presentation/view/widget/poster_image.dart';
+import 'package:movies/feature/home/presentation/view/widget/recommend_list_view.dart';
 
 class MovieDetailes extends StatelessWidget {
   const MovieDetailes({super.key, required this.movie});
@@ -16,12 +20,12 @@ class MovieDetailes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        body: Stack(
-          children: [
-            CustomBackGround(),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+      child: BlocProvider(
+        create: (context) => RecommendMoviesCubit(getIt.get<HomeRemoteDataSource>()),
+        child: Scaffold(
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                   height: 120.h,
@@ -31,55 +35,27 @@ class MovieDetailes extends StatelessWidget {
                   ),
                   child: Stack(
                     children: [
-                      CachedNetworkImage(
-                        width: double.infinity,
-                        imageUrl: EndPoint.imageBaseUrl + movie.backdropPath,
-                        fit: BoxFit.cover,
+                      MovieBackGroundImage(
+                        backGroundImagUrl: movie.backdropPath,
                       ),
-                      BackBottom(onTap: () {}),
-
+                      BackBottom(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                      Positioned(bottom: 0, child: MovieDataBackGround()),
                       Positioned(
                         bottom: 0,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Column(
-                              children: [
-                                Stack(
-                                  children: [
-                                    Column(
-                                      children: [
-                                        SizedBox(
-                                          width: 30.w,
-                                          child: CachedNetworkImage(
-                                            imageUrl:
-                                                EndPoint.imageBaseUrl +
-                                                movie.posterPath,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 15,),
-                                      ],
-                                    ),
-                                    Positioned(
-                                      bottom: 0,
-                                      left: 70,
-                                      right: 70,
-                                      child: Container( 
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadiusGeometry.circular(25),
-                                          color:Colors.red,
-                                        ),
-                                        child: Padding(padding: EdgeInsetsGeometry.all(15),
-                                        child: Icon(Icons.play_arrow,color: AppColor.white,),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Column(children: []),
-                          ],
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 30),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              PosterImage(imageUrl: movie.posterPath),
+                              const SizedBox(width: 20),
+                              MovieData(movie: movie),
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -88,33 +64,20 @@ class MovieDetailes extends StatelessWidget {
                 const SizedBox(height: 20),
                 Text(
                   movie.title,
-                  style: AppText.bold28.copyWith(
-                    fontStyle: FontStyle.italic,
-                    color: Colors.red,
-                    shadows: [
-                      Shadow(color: AppColor.black, blurRadius: 100),
-                      Shadow(color: AppColor.grey, blurRadius: 100),
-                    ],
-                  ),
+                  style: AppText.bold23.copyWith(fontStyle: FontStyle.italic),
                 ),
                 const SizedBox(height: 6),
+                Text(movie.overiew, style: AppText.medium16),
+                const SizedBox(height: 20),
+                Text('Suggested For You :', style: AppText.bold23),
+                const SizedBox(height: 15),
                 SizedBox(
-                  width: double.infinity,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      StarRating(rating: movie.voteAverage),
-                      const SizedBox(width: 10),
-                      Text(
-                        '${movie.voteAverage}/10',
-                        style: AppText.medium24.copyWith(color: AppColor.grey),
-                      ),
-                    ],
-                  ),
+                  height: 70.h,
+                  child: RecommendListView(mvieId: movie.id),
                 ),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );

@@ -8,6 +8,9 @@ abstract class HomeRemoteDataSource {
   Future<Either<Failure, List<MovieEntity>>> featchMovies({
     required String movieType,
   });
+  Future<Either<Failure, List<MovieEntity>>> featchRecommendMovies({
+    required int movieId,
+  });
 }
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
@@ -32,9 +35,29 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
           .toList();
       return Right(moviesEntity);
     } catch (e) {
-      return Left(
-        ServerFailure(message: e.toString())
+      return Left(ServerFailure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<MovieEntity>>> featchRecommendMovies({
+    required int movieId,
+  }) async {
+    try {
+      var data = await apiService.get(
+        'movie/$movieId/recommendations?language=en-US&page=1',
       );
+      List<MovieModel> moviesModel = List<MovieModel>.from(
+        (data['results'] as List).map(
+          (e) => MovieModel.fromJson(e as Map<String, dynamic>),
+        ),
+      );
+      List<MovieEntity> moviesEntity = moviesModel
+          .map((e) => e.toEntity())
+          .toList();
+      return Right(moviesEntity);
+    } catch (e) {
+      return Left(ServerFailure(message: e.toString()));
     }
   }
 }

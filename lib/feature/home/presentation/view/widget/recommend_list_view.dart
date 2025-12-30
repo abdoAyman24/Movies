@@ -1,29 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies/core/utils/app_icon.dart';
-import 'package:movies/feature/home/presentation/manager/top_rate_cubit/top_rate_cubit.dart';
+import 'package:movies/feature/home/presentation/manager/recommend_movie_cubit/recommend_movies_cubit.dart';
 import 'package:movies/feature/home/presentation/view/widget/movies_list_view.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class TopRateListViewItem extends StatefulWidget {
-  const TopRateListViewItem({super.key});
-
+class RecommendListView extends StatefulWidget {
+  const RecommendListView({super.key, required this.mvieId});
+  final int mvieId;
   @override
-  State<TopRateListViewItem> createState() => _TopRateListViewItemState();
+  State<RecommendListView> createState() => _RecommendListViewState();
 }
 
-class _TopRateListViewItemState extends State<TopRateListViewItem> {
+class _RecommendListViewState extends State<RecommendListView> {
   @override
   void initState() {
-    context.read<TopRateCubit>().featchTopRate();
+    context.read<RecommendMoviesCubit>().featchRecommendMovies(
+      movieId: widget.mvieId,
+    );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TopRateCubit, TopRateState>(
+    return BlocBuilder<RecommendMoviesCubit, RecommendMoviesState>(
       builder: (context, state) {
-        if (state is TopRateLoad) {
+        if (state is RecommendMoviesLoad) {
           return Skeletonizer(
             enabled: true,
             child: ListView.builder(
@@ -40,7 +42,7 @@ class _TopRateListViewItemState extends State<TopRateListViewItem> {
               },
             ),
           );
-        } else if (state is TopRateSuccess) {
+        } else if (state is RecommendMoviesSuccess) {
           return MoviesListView(movies: state.movies);
         } else {
           return Icon(Icons.error);
