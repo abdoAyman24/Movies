@@ -6,8 +6,8 @@ import 'package:movies/core/utils/app_color.dart';
 import 'package:movies/core/widget/custom_button.dart';
 import 'package:movies/core/widget/custom_text_form_field.dart';
 import 'package:movies/core/widget/movie_icon.dart';
-import 'package:movies/feature/auth/presentation/View/login.dart';
 import 'package:movies/feature/auth/presentation/manager/cubit/auth_cubit.dart';
+import 'package:movies/feature/home/presentation/view/main_view.dart';
 
 class LoginViewForm extends StatefulWidget {
   const LoginViewForm({super.key});
@@ -96,7 +96,7 @@ class _LoginViewFormState extends State<LoginViewForm> {
                       );
                       Navigator.of(
                         context,
-                      ).pushReplacementNamed(Login.routeName);
+                      ).pushReplacementNamed(MainView.routeName);
                     }
                   },
                   isLoding: false,

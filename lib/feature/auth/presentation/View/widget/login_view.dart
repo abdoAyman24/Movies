@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies/core/widget/arrow_back_widget.dart';
-import 'package:movies/feature/auth/presentation/View/widget/auth_back_ground.dart';
+import 'package:movies/core/widget/custom_back_ground.dart';
 import 'package:movies/feature/auth/presentation/View/widget/login_view_form.dart';
 
 class LoginView extends StatelessWidget {
@@ -8,33 +8,32 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
-        return Stack(
-          children: [
-            AuthBackGround(),
+    return Stack(
+      children: [
+        CustomBackGround(),
 
-            SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: LoginViewForm(),
+        SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: LoginViewForm(),
+          ),
+        ),
+        Positioned(
+          left: 10,
+          height: 100,
+          child: Row(
+            children: [
+              InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Icon(Icons.arrow_back_ios_new, size: 30),
               ),
-            ),
-            Positioned(
-              left: 10,
-              height: 100,
-              child: Row(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Icon(Icons.arrow_back_ios_new, size: 30),
-                  ),
-                ],
-              ),
-            ),
-            ArrowBackWidget(),
-          ],
-        );
+            ],
+          ),
+        ),
+        ArrowBackWidget(),
+      ],
+    );
   }
 }

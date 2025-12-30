@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 abstract class AppText {
   static const String _fontFamily = 'poppins';
 
@@ -12,7 +13,6 @@ abstract class AppText {
     fontWeight: FontWeight.bold,
     fontSize: 32,
   );
-
 
   static const TextStyle bold23 = TextStyle(
     fontFamily: _fontFamily,

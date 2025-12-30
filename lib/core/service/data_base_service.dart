@@ -6,7 +6,4 @@ abstract class DataBaseService {
   });
   // Future<Map<String ,dynamic>> getUser({required String path,required String documentId});
   Future<dynamic> getData({required String path, String? documentId});
- 
- 
-
 }

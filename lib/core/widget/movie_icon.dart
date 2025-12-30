@@ -7,6 +7,10 @@ class MovieIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image(image: AssetImage(Assets.imagesMovie), width: iconSize, height: iconSize);
+    return Image(
+      image: AssetImage(Assets.imagesMovieIcon),
+      width: iconSize,
+      height: iconSize,
+    );
   }
 }

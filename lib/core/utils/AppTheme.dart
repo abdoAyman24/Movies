@@ -12,7 +12,6 @@ final ThemeData appTheme = ThemeData(
     primary: AppColor.primary,
     secondary: AppColor.secondPrimary,
     surface: AppColor.black,
-
   ),
   inputDecorationTheme: InputDecorationTheme(
     filled: true,
@@ -32,7 +31,7 @@ final ThemeData appTheme = ThemeData(
       fontSize: 26,
       fontWeight: FontWeight.bold,
     ),
-     bodySmall: TextStyle(color: Colors.white, fontSize: 14),
+    bodySmall: TextStyle(color: Colors.white, fontSize: 14),
     bodyMedium: TextStyle(color: Colors.white, fontSize: 16),
 
     labelLarge: TextStyle(

@@ -17,7 +17,6 @@ class FireStoreService extends DataBaseService {
     }
   }
 
-  
   @override
   Future<dynamic> getData({required String path, String? documentId}) async {
     if (documentId != null) {
@@ -30,9 +29,4 @@ class FireStoreService extends DataBaseService {
       return result.docs.map((e) => e.data()).toList();
     }
   }
-
-  
-
-
- 
 }

@@ -13,7 +13,7 @@ class CustomTextForm extends StatefulWidget {
     required this.textFormColor,
     required this.preffixIcon,
     this.confirmPassword,
-     this.textEditingController,
+    this.textEditingController,
   });
 
   final String hint;
@@ -22,7 +22,7 @@ class CustomTextForm extends StatefulWidget {
   final bool showSuffixIcon;
   final TextInputType keyboardType;
   final Color textFormColor;
-  
+
   final TextEditingController? confirmPassword;
   final TextEditingController? textEditingController;
   @override

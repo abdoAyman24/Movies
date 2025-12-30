@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:movies/feature/auth/presentation/View/login.dart';
 import 'package:movies/feature/auth/presentation/View/register.dart';
-import 'package:movies/feature/home/presentation/view/home.dart';
+import 'package:movies/feature/home/domain/entity/movie_entity.dart';
+import 'package:movies/feature/home/presentation/view/main_view.dart';
+import 'package:movies/feature/home/presentation/view/widget/movie_detailes.dart';
 import 'package:movies/feature/on_bording/presentation/view/on_bording.dart';
 
 Route<dynamic> onGenerateRoute(RouteSettings setting) {
@@ -13,10 +15,13 @@ Route<dynamic> onGenerateRoute(RouteSettings setting) {
       return MaterialPageRoute(builder: (context) => Login());
     case Register.routeName:
       return MaterialPageRoute(builder: (context) => Register());
-    
-    case Home.routeName:
-      return MaterialPageRoute(builder: (context) => Home());
-    
+
+    case MainView.routeName:
+      return MaterialPageRoute(builder: (context) => MainView());
+
+    case MovieDetailes.routeName:
+      return MaterialPageRoute(builder: (context) => MovieDetailes(movie: setting.arguments as MovieEntity,));
+
     default:
       return MaterialPageRoute(builder: (context) => const Scaffold());
   }

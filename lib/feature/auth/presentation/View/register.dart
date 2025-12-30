@@ -6,8 +6,6 @@ class Register extends StatelessWidget {
   static const String routeName = 'register';
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: RegisterView(),
-    );
+    return Scaffold(body: RegisterView());
   }
 }
