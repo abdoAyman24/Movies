@@ -1,0 +1,53 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies/core/utils/app_icon.dart';
+import 'package:movies/feature/home/presentation/manager/recommend_movie_cubit/recommend_movies_cubit.dart';
+import 'package:movies/feature/home/presentation/view/widget/movies_list_view.dart';
+import 'package:skeletonizer/skeletonizer.dart';
+
+class RecommendListView extends StatefulWidget {
+  const RecommendListView({super.key, required this.mvieId});
+  final int mvieId;
+  @override
+  State<RecommendListView> createState() => _RecommendListViewState();
+}
+
+class _RecommendListViewState extends State<RecommendListView> {
+  @override
+  void initState() {
+    context.read<RecommendMoviesCubit>().featchRecommendMovies(
+      movieId: widget.mvieId,
+    );
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<RecommendMoviesCubit, RecommendMoviesState>(
+      builder: (context, state) {
+        if (state is RecommendMoviesLoad) {
+          return Skeletonizer(
+            enabled: true,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return AspectRatio(
+                  aspectRatio: 0.7,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 25),
+                    child: Image(image: AssetImage(Assets.imagesMovies)),
+                  ),
+                );
+              },
+            ),
+          );
+        } else if (state is RecommendMoviesSuccess) {
+          return MoviesListView(movies: state.movies);
+        } else {
+          return Icon(Icons.error);
+        }
+      },
+    );
+  }
+}

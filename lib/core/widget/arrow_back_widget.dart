@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ArrowBackWidget extends StatelessWidget {
-  const ArrowBackWidget({
-    super.key,
-  });
+  const ArrowBackWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

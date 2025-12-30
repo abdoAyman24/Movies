@@ -4,9 +4,9 @@ import 'package:movies/core/utils/app_color.dart';
 ShapeDecoration containerDecration(double borderCircler) {
   return ShapeDecoration(
     gradient: LinearGradient(
-      begin: Alignment(0, 0),
-      end: Alignment(1.00, 1.00),
-      colors: [AppColor.secondPrimary, AppColor.primary],
+      // begin: Alignment(0, 0),
+      // end: Alignment(1.00, 1.00),
+      colors: [AppColor.black, AppColor.primary],
     ),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(borderCircler),

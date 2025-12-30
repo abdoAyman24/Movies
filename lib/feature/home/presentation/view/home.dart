@@ -1,28 +1,107 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies/core/utils/app_text_styles.dart';
-import 'package:movies/core/widget/custom_search.dart';
+import 'package:movies/core/widget/custom_back_ground.dart';
+import 'package:movies/feature/home/presentation/view/widget/home_welcom.dart';
+import 'package:movies/feature/home/presentation/view/widget/now_play_list_view_item.dart';
+import 'package:movies/feature/home/presentation/view/widget/popular_list_view_item.dart';
+import 'package:movies/feature/home/presentation/view/widget/top_rate_list_view_item.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
-  static const String routeName = 'home';
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 40),
-        child: Column(
-          children: [
-            Text('find Movies , Tv Series', style: AppText.semiBold28),
-            SizedBox(height: 10.h),
-            InkWell(
-              onTap: () {
-                
-              },
-              child: CustomSearch(text: 'Search', searchIcon: Icons.search_sharp)),
-          ],
+    return Stack(
+      children: [
+        CustomBackGround(),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(child: HomeWelcom()),
+              SliverToBoxAdapter(
+                child: Column(
+                  children: [
+                    const SizedBox(height: 15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Now Play', style: AppText.bold23),
+                        InkWell(
+                          onTap: () {},
+                          child: Text(
+                            'See All,',
+                            style: AppText.regular18.copyWith(
+                              //textBaseline: TextBaseline.ideographic,
+                              fontStyle: FontStyle.italic,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    SizedBox(height: 70.h, child: NowPlayListViewItem()),
+                  ],
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Column(
+                  children: [
+                    const SizedBox(height: 15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Popular', style: AppText.bold23),
+                        InkWell(
+                          onTap: () {},
+                          child: Text(
+                            'See All,',
+                            style: AppText.regular18.copyWith(
+                              //textBaseline: TextBaseline.ideographic,
+                              fontStyle: FontStyle.italic,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    SizedBox(height: 70.h, child: PopularListViewItem()),
+                  ],
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Column(
+                  children: [
+                    const SizedBox(height: 15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Top Rated', style: AppText.bold23),
+                        InkWell(
+                          onTap: () {},
+                          child: Text(
+                            'See All,',
+                            style: AppText.regular18.copyWith(
+                              //textBaseline: TextBaseline.ideographic,
+                              fontStyle: FontStyle.italic,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    SizedBox(height: 70.h, child: TopRateListViewItem()),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }

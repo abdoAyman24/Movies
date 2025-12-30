@@ -21,10 +21,7 @@ class CustomSearch extends StatelessWidget {
           children: [
             Icon(searchIcon, size: 30, color: AppColor.grey),
             const SizedBox(width: 15),
-            Text(
-              text,
-              style: AppText.bold19.copyWith(color: AppColor.grey),
-            ),
+            Text(text, style: AppText.bold19.copyWith(color: AppColor.grey)),
           ],
         ),
       ),

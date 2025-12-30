@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movies/core/utils/app_color.dart';
 
 class OnBordingLinear extends StatelessWidget {
-  const OnBordingLinear({
-    super.key,
-  });
+  const OnBordingLinear({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,4 +26,3 @@ class OnBordingLinear extends StatelessWidget {
     );
   }
 }
-

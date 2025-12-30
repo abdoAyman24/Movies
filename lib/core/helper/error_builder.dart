@@ -1,5 +1,7 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 void errorBuilder(BuildContext context, String errorMessage) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(errorMessage)));
-  }
+  ScaffoldMessenger.of(
+    context,
+  ).showSnackBar(SnackBar(content: Text(errorMessage)));
+}
