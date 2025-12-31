@@ -1,8 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movies/core/utils/app_color.dart';
 import 'package:movies/core/utils/app_text_styles.dart';
-import 'package:movies/core/utils/end_point.dart';
+import 'package:movies/core/widget/custom_cach_network_image.dart';
 import 'package:movies/feature/home/domain/entity/movie_entity.dart';
 import 'package:movies/feature/home/presentation/view/widget/movie_detailes.dart';
 import 'package:movies/feature/home/presentation/view/widget/star.dart';
@@ -28,9 +27,7 @@ class MoviesViewItem extends StatelessWidget {
             children: [
               AspectRatio(
                 aspectRatio: 0.80,
-                child: CachedNetworkImage(
-                  imageUrl: EndPoint.imageBaseUrl + movie.posterPath,
-                ),
+                child: CustomCachNetworkImage(imageUrl: movie.posterPath),
               ),
               const SizedBox(height: 5),
               Padding(
@@ -77,3 +74,4 @@ class MoviesViewItem extends StatelessWidget {
     );
   }
 }
+

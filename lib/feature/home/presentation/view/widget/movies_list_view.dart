@@ -1,6 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:movies/core/utils/end_point.dart';
+import 'package:movies/core/widget/custom_cach_network_image.dart';
 import 'package:movies/feature/home/domain/entity/movie_entity.dart';
 import 'package:movies/feature/home/presentation/view/widget/movie_detailes.dart';
 
@@ -25,9 +24,7 @@ class MoviesListView extends StatelessWidget {
                   arguments: movies[index],
                 );
               },
-              child: CachedNetworkImage(
-                imageUrl: EndPoint.imageBaseUrl + movies[index].posterPath,
-              ),
+              child: CustomCachNetworkImage(imageUrl: movies[index].posterPath),
             ),
           ),
         );
