@@ -3,19 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:movies/core/utils/app_color.dart';
 import 'package:movies/core/utils/end_point.dart';
 
-class MovieBackGroundImage extends StatelessWidget {
-  const MovieBackGroundImage({super.key, required this.backGroundImagUrl});
+class CustomCachNetworkImage extends StatelessWidget {
+  const CustomCachNetworkImage({super.key, required this.imageUrl});
 
-  final String backGroundImagUrl;
+  final String imageUrl;
 
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
-      width: double.infinity,
-      imageUrl: EndPoint.imageBaseUrl + backGroundImagUrl,
-      fit: BoxFit.cover,
+      imageUrl: EndPoint.imageBaseUrl + imageUrl,
       errorWidget: (context, url, error) {
-        return Icon(Icons.error_outline, color: AppColor.grey, size: 80);
+        return Center(
+          child: Icon(Icons.error_outline, color: AppColor.grey, size: 80),
+        );
       },
     );
   }

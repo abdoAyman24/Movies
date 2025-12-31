@@ -12,6 +12,8 @@ abstract class HomeRemoteDataSource {
     required int movieId,
   });
   Future<Either<Failure, List<MovieEntity>>> featchPopularThisWeek();
+  Future<Either<Failure, List<MovieEntity>>> movieSearch({required String movietitle});
+
 }
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
@@ -68,6 +70,26 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
      try {
       var data = await apiService.get(
         'trending/movie/week?language=en-US',
+      );
+      List<MovieModel> moviesModel = List<MovieModel>.from(
+        (data['results'] as List).map(
+          (e) => MovieModel.fromJson(e as Map<String, dynamic>),
+        ),
+      );
+      List<MovieEntity> moviesEntity = moviesModel
+          .map((e) => e.toEntity())
+          .toList();
+      return Right(moviesEntity);
+    } catch (e) {
+      return Left(ServerFailure(message: e.toString()));
+    }
+  }
+  
+  @override
+  Future<Either<Failure, List<MovieEntity>>> movieSearch({required String movietitle})async {
+        try {
+      var data = await apiService.get(
+        'search/movie?query=$movietitle&include_adult=false&language=en-US&page=1',
       );
       List<MovieModel> moviesModel = List<MovieModel>.from(
         (data['results'] as List).map(

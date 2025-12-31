@@ -10,7 +10,7 @@ import 'package:movies/feature/home/presentation/manager/now_play_cubit/now_play
 import 'package:movies/feature/home/presentation/manager/popular_cubit/popular_cubit.dart';
 import 'package:movies/feature/home/presentation/manager/top_rate_cubit/top_rate_cubit.dart';
 import 'package:movies/feature/home/presentation/view/home.dart';
-import 'package:movies/feature/search/presentation/view/Search.dart';
+import 'package:movies/feature/home/presentation/view/Search_view.dart';
 import 'package:movies/feature/home/presentation/view/widget/play.dart';
 
 class MainView extends StatefulWidget {

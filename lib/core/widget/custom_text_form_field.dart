@@ -14,6 +14,7 @@ class CustomTextForm extends StatefulWidget {
     required this.preffixIcon,
     this.confirmPassword,
     this.textEditingController,
+    this.textColor = Colors.black,
   });
 
   final String hint;
@@ -22,6 +23,7 @@ class CustomTextForm extends StatefulWidget {
   final bool showSuffixIcon;
   final TextInputType keyboardType;
   final Color textFormColor;
+  final Color textColor;
 
   final TextEditingController? confirmPassword;
   final TextEditingController? textEditingController;
@@ -54,7 +56,7 @@ class _CustomTextFormState extends State<CustomTextForm> {
               }
               return null;
             },
-            style: TextStyle(color: AppColor.black),
+            style: TextStyle(color: widget.textColor),
             keyboardType: widget.keyboardType,
             obscureText: !widget.showSuffixIcon
                 ? false
