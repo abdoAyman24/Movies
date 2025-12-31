@@ -3,8 +3,8 @@ import 'package:movies/core/utils/app_color.dart';
 import 'package:movies/core/widget/custom_back_ground.dart';
 import 'package:movies/core/widget/custom_text_form_field.dart';
 
-class Search extends StatelessWidget {
-  const Search({super.key});
+class SearchView extends StatelessWidget {
+  const SearchView({super.key});
 
   @override
   Widget build(BuildContext context) {

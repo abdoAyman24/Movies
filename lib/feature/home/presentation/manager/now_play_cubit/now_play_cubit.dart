@@ -10,7 +10,7 @@ part 'now_play_state.dart';
 class NowPlayCubit extends Cubit<NowPlayState> {
   NowPlayCubit(this.homeRemoteDataSource) : super(NowPlayInitial());
   final HomeRemoteDataSource homeRemoteDataSource;
-
+  List<MovieEntity> movies = [];
   void featchNowPlaying() async {
     emit(NowPlayLoad());
     var result = await homeRemoteDataSource.featchMovies(
@@ -19,13 +19,11 @@ class NowPlayCubit extends Cubit<NowPlayState> {
 
     result.fold(
       (l) {
-       
         emit(NowPlayFailure(errorMessage: l.message));
       },
       (r) {
-        
-
         emit(NowPlaySuccess(movies: r));
+        movies.addAll(r);
       },
     );
   }

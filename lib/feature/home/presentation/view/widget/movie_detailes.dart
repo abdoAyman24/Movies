@@ -6,10 +6,12 @@ import 'package:movies/core/utils/app_text_styles.dart';
 import 'package:movies/feature/home/data/data_source/home_remote_data_source.dart';
 import 'package:movies/feature/home/domain/entity/movie_entity.dart';
 import 'package:movies/feature/home/presentation/manager/recommend_movie_cubit/recommend_movies_cubit.dart';
+import 'package:movies/feature/home/presentation/manager/trend_cubit/trend_cubit.dart';
 import 'package:movies/feature/home/presentation/view/widget/back_bottom.dart';
 import 'package:movies/feature/home/presentation/view/widget/movie_back_ground_image.dart';
 import 'package:movies/feature/home/presentation/view/widget/movie_data.dart';
 import 'package:movies/feature/home/presentation/view/widget/movie_data_back_ground.dart';
+import 'package:movies/feature/home/presentation/view/widget/popular_this_week_list_view.dart';
 import 'package:movies/feature/home/presentation/view/widget/poster_image.dart';
 import 'package:movies/feature/home/presentation/view/widget/recommend_list_view.dart';
 
@@ -20,8 +22,17 @@ class MovieDetailes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: BlocProvider(
-        create: (context) => RecommendMoviesCubit(getIt.get<HomeRemoteDataSource>()),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (BuildContext context) =>
+                TrendCubit(getIt.get<HomeRemoteDataSource>()),
+          ),
+          BlocProvider(
+            create: (BuildContext context) =>
+                RecommendMoviesCubit(getIt.get<HomeRemoteDataSource>()),
+          ),
+        ],
         child: Scaffold(
           body: SingleChildScrollView(
             child: Column(
@@ -66,13 +77,18 @@ class MovieDetailes extends StatelessWidget {
                   movie.title,
                   style: AppText.bold23.copyWith(fontStyle: FontStyle.italic),
                 ),
+
                 const SizedBox(height: 6),
                 Text(movie.overiew, style: AppText.medium16),
+                const SizedBox(height: 20),
+                Text('Popular this week :', style: AppText.bold23),
+                const SizedBox(height: 15),
+                SizedBox(height: 55.h, child: PopularThisWeekListView()),
                 const SizedBox(height: 20),
                 Text('Suggested For You :', style: AppText.bold23),
                 const SizedBox(height: 15),
                 SizedBox(
-                  height: 70.h,
+                  height: 55.h,
                   child: RecommendListView(mvieId: movie.id),
                 ),
               ],

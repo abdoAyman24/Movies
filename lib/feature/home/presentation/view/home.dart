@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:movies/core/utils/app_text_styles.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies/core/widget/custom_back_ground.dart';
+import 'package:movies/feature/home/presentation/manager/now_play_cubit/now_play_cubit.dart';
+import 'package:movies/feature/home/presentation/manager/popular_cubit/popular_cubit.dart';
+import 'package:movies/feature/home/presentation/manager/top_rate_cubit/top_rate_cubit.dart';
+import 'package:movies/feature/home/presentation/view/movies_grid_view.dart';
 import 'package:movies/feature/home/presentation/view/widget/home_welcom.dart';
+import 'package:movies/feature/home/presentation/view/widget/movies_type_title.dart';
 import 'package:movies/feature/home/presentation/view/widget/now_play_list_view_item.dart';
 import 'package:movies/feature/home/presentation/view/widget/popular_list_view_item.dart';
 import 'package:movies/feature/home/presentation/view/widget/top_rate_list_view_item.dart';
@@ -21,81 +25,42 @@ class Home extends StatelessWidget {
             slivers: [
               SliverToBoxAdapter(child: HomeWelcom()),
               SliverToBoxAdapter(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 15),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Now Play', style: AppText.bold23),
-                        InkWell(
-                          onTap: () {},
-                          child: Text(
-                            'See All,',
-                            style: AppText.regular18.copyWith(
-                              //textBaseline: TextBaseline.ideographic,
-                              fontStyle: FontStyle.italic,
-                              decoration: TextDecoration.underline,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    SizedBox(height: 70.h, child: NowPlayListViewItem()),
-                  ],
+                child: MoviesTypeTitle(
+                  widget: NowPlayListViewItem(),
+                  moviesType: 'NowPlay',
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      MoviesGridView.routName,
+                      arguments: context.read<NowPlayCubit>().movies,
+                    );
+                  },
                 ),
               ),
               SliverToBoxAdapter(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 15),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Popular', style: AppText.bold23),
-                        InkWell(
-                          onTap: () {},
-                          child: Text(
-                            'See All,',
-                            style: AppText.regular18.copyWith(
-                              //textBaseline: TextBaseline.ideographic,
-                              fontStyle: FontStyle.italic,
-                              decoration: TextDecoration.underline,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    SizedBox(height: 70.h, child: PopularListViewItem()),
-                  ],
+                child: MoviesTypeTitle(
+                  widget: PopularListViewItem(),
+                  moviesType: 'Popular',
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      MoviesGridView.routName,
+                      arguments: context.read<PopularCubit>().movies,
+                    );
+                  },
                 ),
               ),
               SliverToBoxAdapter(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 15),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Top Rated', style: AppText.bold23),
-                        InkWell(
-                          onTap: () {},
-                          child: Text(
-                            'See All,',
-                            style: AppText.regular18.copyWith(
-                              //textBaseline: TextBaseline.ideographic,
-                              fontStyle: FontStyle.italic,
-                              decoration: TextDecoration.underline,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    SizedBox(height: 70.h, child: TopRateListViewItem()),
-                  ],
+                child: MoviesTypeTitle(
+                  widget: TopRateListViewItem(),
+                  moviesType: 'Top Rated',
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      MoviesGridView.routName,
+                      arguments: context.read<TopRateCubit>().movies,
+                    );
+                  },
                 ),
               ),
             ],

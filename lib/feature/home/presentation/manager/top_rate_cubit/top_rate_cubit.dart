@@ -9,8 +9,8 @@ part 'top_rate_state.dart';
 class TopRateCubit extends Cubit<TopRateState> {
   TopRateCubit(this.homeRemoteDataSource) : super(TopRateInitial());
   final HomeRemoteDataSource homeRemoteDataSource;
-
-void featchTopRate() async {
+  List<MovieEntity> movies = [];
+  void featchTopRate() async {
     emit(TopRateLoad());
     var result = await homeRemoteDataSource.featchMovies(
       movieType: EndPoint.topRate,
@@ -18,11 +18,10 @@ void featchTopRate() async {
 
     result.fold(
       (l) {
-       
         emit(TopRateFailure(errorMessage: l.message));
       },
       (r) {
-        
+        movies.addAll(r);
 
         emit(TopRateSuccess(movies: r));
       },
