@@ -11,7 +11,7 @@ part 'popular_state.dart';
 class PopularCubit extends Cubit<PopularState> {
   PopularCubit(this.homeRemoteDataSource) : super(PopularInitial());
   final HomeRemoteDataSource homeRemoteDataSource;
-
+  List<MovieEntity> movies = [];
   void featchPopular() async {
     emit(PopularLoad());
     var result = await homeRemoteDataSource.featchMovies(
@@ -23,6 +23,7 @@ class PopularCubit extends Cubit<PopularState> {
         emit(PopularFailure(errorMessage: l.message));
       },
       (r) {
+        movies.addAll(r);
         emit(PopularSuccess(movies: r));
       },
     );

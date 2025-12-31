@@ -10,7 +10,7 @@ import 'package:movies/feature/home/presentation/manager/now_play_cubit/now_play
 import 'package:movies/feature/home/presentation/manager/popular_cubit/popular_cubit.dart';
 import 'package:movies/feature/home/presentation/manager/top_rate_cubit/top_rate_cubit.dart';
 import 'package:movies/feature/home/presentation/view/home.dart';
-import 'package:movies/feature/home/presentation/view/widget/Search.dart';
+import 'package:movies/feature/search/presentation/view/Search.dart';
 import 'package:movies/feature/home/presentation/view/widget/play.dart';
 
 class MainView extends StatefulWidget {
@@ -27,16 +27,23 @@ class _MainViewState extends State<MainView> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create:(BuildContext context) => NowPlayCubit(getIt.get<HomeRemoteDataSource>()) ),
-        BlocProvider(create:(BuildContext context) => PopularCubit(getIt.get<HomeRemoteDataSource>()) ),
-        BlocProvider(create:(BuildContext context) => TopRateCubit(getIt.get<HomeRemoteDataSource>()) ),
-
-
+        BlocProvider(
+          create: (BuildContext context) =>
+              NowPlayCubit(getIt.get<HomeRemoteDataSource>()),
+        ),
+        BlocProvider(
+          create: (BuildContext context) =>
+              PopularCubit(getIt.get<HomeRemoteDataSource>()),
+        ),
+        BlocProvider(
+          create: (BuildContext context) =>
+              TopRateCubit(getIt.get<HomeRemoteDataSource>()),
+        ),
       ],
       child: Scaffold(
         body: IndexedStack(
           index: _currentIndex,
-          children: [Home(), const Search(), const Play(), const Profile()],
+          children: [Home(), const SearchView(), const Play(), const Profile()],
         ),
         bottomNavigationBar: ConvexAppBar(
           items: [
