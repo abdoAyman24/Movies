@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movies/core/utils/app_color.dart';
 import 'package:movies/core/widget/custom_back_ground.dart';
 import 'package:movies/feature/home/domain/entity/movie_entity.dart';
-import 'package:movies/feature/home/presentation/view/widget/movies_grid_view_body.dart';
+import 'package:movies/core/widget/custom_movies_grid_view_body.dart';
 
 class MoviesGridView extends StatefulWidget {
   const MoviesGridView({super.key, required this.movies});
@@ -24,7 +24,10 @@ class _MoviesGridViewState extends State<MoviesGridView> {
       body: Stack(
         children: [
           CustomBackGround(),
-          MoviesGridViewBody(movies: widget.movies, movieFilter: movieFilter),
+          CustomMoviesGridViewBody(
+            movies: widget.movies,
+            movieFilter: movieFilter,
+          ),
         ],
       ),
     );

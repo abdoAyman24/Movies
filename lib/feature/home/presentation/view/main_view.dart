@@ -2,16 +2,18 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movies/core/helper/favorite_movie.dart';
 import 'package:movies/core/service/service_locator.dart';
 import 'package:movies/core/utils/app_color.dart';
 import 'package:movies/feature/Profile/presentation/view/profile.dart';
+import 'package:movies/feature/favorite/presentation/manager/cubit/favorite_cubit.dart';
 import 'package:movies/feature/home/data/data_source/home_remote_data_source.dart';
 import 'package:movies/feature/home/presentation/manager/now_play_cubit/now_play_cubit.dart';
 import 'package:movies/feature/home/presentation/manager/popular_cubit/popular_cubit.dart';
 import 'package:movies/feature/home/presentation/manager/top_rate_cubit/top_rate_cubit.dart';
 import 'package:movies/feature/home/presentation/view/home.dart';
-import 'package:movies/feature/home/presentation/view/Search_view.dart';
-import 'package:movies/feature/home/presentation/view/widget/play.dart';
+import 'package:movies/feature/home/presentation/view/search_view.dart';
+import 'package:movies/feature/favorite/presentation/view/favorite.dart';
 
 class MainView extends StatefulWidget {
   const MainView({super.key});
@@ -39,11 +41,20 @@ class _MainViewState extends State<MainView> {
           create: (BuildContext context) =>
               TopRateCubit(getIt.get<HomeRemoteDataSource>()),
         ),
+        BlocProvider(
+          create: (BuildContext context) =>
+              FavoriteCubit(getIt.get<HomeRemoteDataSource>(),getIt.get<FavoriteMovie>()),
+        ),
       ],
       child: Scaffold(
         body: IndexedStack(
           index: _currentIndex,
-          children: [Home(), const SearchView(), const Play(), const Profile()],
+          children: [
+            Home(),
+            const SearchView(),
+            const Favorite(),
+            const Profile(),
+          ],
         ),
         bottomNavigationBar: ConvexAppBar(
           items: [
@@ -63,7 +74,7 @@ class _MainViewState extends State<MainView> {
             ),
             TabItem(
               icon: Icon(
-                Icons.play_circle_filled_rounded,
+                Icons.favorite,
                 color: _currentIndex == 2 ? AppColor.primary : AppColor.white,
                 size: _currentIndex == 2 ? 40 : 30,
               ),

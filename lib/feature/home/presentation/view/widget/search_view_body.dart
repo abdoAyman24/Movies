@@ -4,7 +4,7 @@ import 'package:movies/core/dummy/dummy_movies.dart';
 import 'package:movies/core/utils/app_color.dart';
 import 'package:movies/core/widget/custom_text_form_field.dart';
 import 'package:movies/feature/home/presentation/manager/movie_search_cubit/movie_search_cubit.dart';
-import 'package:movies/feature/home/presentation/view/widget/movies_grid_view_body.dart';
+import 'package:movies/core/widget/custom_movies_grid_view_body.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class SearchViewBody extends StatelessWidget {
@@ -31,11 +31,13 @@ class SearchViewBody extends StatelessWidget {
               return Expanded(
                 child: Skeletonizer(
                   enabled: true,
-                  child: MoviesGridViewBody(movies: dummyMovies),
+                  child: CustomMoviesGridViewBody(movies: dummyMovies),
                 ),
               );
             } else if (state is MovieSearchSuccess) {
-              return Expanded(child: MoviesGridViewBody(movies: state.movies));
+              return Expanded(
+                child: CustomMoviesGridViewBody(movies: state.movies),
+              );
             } else {
               return Expanded(
                 child: Column(

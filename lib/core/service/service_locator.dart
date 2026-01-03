@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:movies/config/api_service.dart';
+import 'package:movies/core/helper/favorite_movie.dart';
 import 'package:movies/core/service/data_base_service.dart';
 import 'package:movies/core/service/fire_store_service.dart';
 import 'package:movies/core/service/firebase_auth_service.dart';
@@ -12,6 +13,8 @@ final getIt = GetIt.instance;
 void setUpGetIt() {
   getIt.registerSingleton<FireBaseAuthService>(FireBaseAuthService());
   getIt.registerSingleton<DataBaseService>(FireStoreService());
+  getIt.registerSingleton<FavoriteMovie>(FavoriteMovie());
+
 
   
   getIt.registerSingleton<ApiService>(ApiService(Dio()));

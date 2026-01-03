@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies/core/utils/app_text_styles.dart';
 import 'package:movies/feature/home/domain/entity/movie_entity.dart';
+import 'package:movies/feature/home/presentation/view/widget/add_movie_to_favorite_widget.dart';
 import 'package:movies/feature/home/presentation/view/widget/star.dart';
 
 class MovieData extends StatelessWidget {
@@ -56,7 +57,7 @@ class MovieData extends StatelessWidget {
               ),
               Column(
                 children: [
-                  Icon(Icons.favorite, color: Colors.red),
+                  AddMovieToFavoriteWidget(movie: movie),
                   Text('Like', style: AppText.regular16),
                 ],
               ),
@@ -73,3 +74,4 @@ class MovieData extends StatelessWidget {
     );
   }
 }
+

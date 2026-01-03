@@ -31,7 +31,7 @@ class _RecommendListViewState extends State<RecommendListView> {
             child: MoviesListView(movies: dummyMovies),
           );
         } else if (state is RecommendMoviesSuccess) {
-          return MoviesListView(movies: state.movies);
+          return MoviesListView(movies: state.movies.isNotEmpty?state.movies:dummyMovies);
         } else {
           return Icon(Icons.error);
         }
