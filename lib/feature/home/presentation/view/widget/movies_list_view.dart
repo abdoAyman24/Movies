@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies/core/widget/custom_cach_network_image.dart';
+import 'package:movies/feature/favorite/presentation/manager/cubit/favorite_cubit.dart';
 import 'package:movies/feature/home/domain/entity/movie_entity.dart';
 import 'package:movies/feature/home/presentation/view/widget/movie_detailes.dart';
 
@@ -21,7 +23,10 @@ class MoviesListView extends StatelessWidget {
                 Navigator.pushNamed(
                   context,
                   MovieDetailes.routeName,
-                  arguments: movies[index],
+                  arguments: {
+                    'Movie': movies[index], // MovieEntity
+                    'favoriteCubit': context.read<FavoriteCubit>(),
+                  },
                 );
               },
               child: CustomCachNetworkImage(imageUrl: movies[index].posterPath),

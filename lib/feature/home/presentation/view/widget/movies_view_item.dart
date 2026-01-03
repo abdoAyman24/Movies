@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies/core/utils/app_color.dart';
 import 'package:movies/core/utils/app_text_styles.dart';
 import 'package:movies/core/widget/custom_cach_network_image.dart';
+import 'package:movies/feature/favorite/presentation/manager/cubit/favorite_cubit.dart';
 import 'package:movies/feature/home/domain/entity/movie_entity.dart';
 import 'package:movies/feature/home/presentation/view/widget/movie_detailes.dart';
 import 'package:movies/feature/home/presentation/view/widget/star.dart';
@@ -13,7 +15,10 @@ class MoviesViewItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, MovieDetailes.routeName, arguments: movie);
+        Navigator.pushNamed(context, MovieDetailes.routeName, arguments: {
+                    'Movie': movie, // MovieEntity
+                    'favoriteCubit': context.read<FavoriteCubit>(),
+                  },);
       },
       child: Container(
         decoration: BoxDecoration(

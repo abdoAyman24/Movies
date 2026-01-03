@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies/feature/auth/presentation/View/login.dart';
 import 'package:movies/feature/auth/presentation/View/register.dart';
+import 'package:movies/feature/favorite/presentation/manager/cubit/favorite_cubit.dart';
 import 'package:movies/feature/home/domain/entity/movie_entity.dart';
 import 'package:movies/feature/home/presentation/view/main_view.dart';
 import 'package:movies/feature/home/presentation/view/movies_grid_view.dart';
@@ -21,11 +23,26 @@ Route<dynamic> onGenerateRoute(RouteSettings setting) {
       return MaterialPageRoute(builder: (context) => MainView());
 
     case MovieDetailes.routeName:
-      return MaterialPageRoute(builder: (context) => MovieDetailes(movie: setting.arguments as MovieEntity,));
+      final args = setting.arguments as Map<String, dynamic>;
 
-case MoviesGridView.routName:
-      return MaterialPageRoute(builder: (context) => MoviesGridView(movies: setting.arguments as List<MovieEntity>,));
+      final movies = args['Movie'] as MovieEntity;
+      final favoriteCubit = args['favoriteCubit'] as FavoriteCubit;
 
+      return MaterialPageRoute(
+    builder: (context) => MultiBlocProvider(
+      providers: [
+        
+        BlocProvider.value(value: favoriteCubit),
+      ],
+      child: MovieDetailes(movie:movies ),
+    ),
+      );
+
+    case MoviesGridView.routName:
+      return MaterialPageRoute(
+        builder: (context) =>
+            MoviesGridView(movies: setting.arguments as List<MovieEntity>),
+      );
 
     default:
       return MaterialPageRoute(builder: (context) => const Scaffold());

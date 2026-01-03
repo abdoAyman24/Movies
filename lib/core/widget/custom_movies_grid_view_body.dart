@@ -1,12 +1,11 @@
-
 import 'package:flutter/material.dart';
 import 'package:movies/feature/home/domain/entity/movie_entity.dart';
 import 'package:movies/feature/home/presentation/view/widget/movies_view_item.dart';
 
-class MoviesGridViewBody extends StatelessWidget {
-  const MoviesGridViewBody({
+class CustomMoviesGridViewBody extends StatelessWidget {
+  const CustomMoviesGridViewBody({
     super.key,
-     this.movieFilter=const [],
+    this.movieFilter = const [],
     required this.movies,
   });
 
@@ -32,7 +31,7 @@ class MoviesGridViewBody extends StatelessWidget {
               return MoviesViewItem(
                 movie: movieFilter.isNotEmpty
                     ? movieFilter[index]
-                    :movies[index],
+                    : movies[index],
               );
             },
           ),
