@@ -42,8 +42,10 @@ class _MainViewState extends State<MainView> {
               TopRateCubit(getIt.get<HomeRemoteDataSource>()),
         ),
         BlocProvider(
-          create: (BuildContext context) =>
-              FavoriteCubit(getIt.get<HomeRemoteDataSource>(),getIt.get<FavoriteMovie>()),
+          create: (BuildContext context) => FavoriteCubit(
+            getIt.get<HomeRemoteDataSource>(),
+            getIt.get<FavoriteMovie>(),
+          ),
         ),
       ],
       child: Scaffold(
@@ -61,36 +63,37 @@ class _MainViewState extends State<MainView> {
             TabItem(
               icon: Icon(
                 Icons.home,
-                color: _currentIndex == 0 ? AppColor.primary : AppColor.white,
+                color: _currentIndex == 0 ? AppColor.primary : AppColor.grey,
                 size: _currentIndex == 0 ? 40 : 30,
               ),
             ),
             TabItem(
               icon: Icon(
                 Icons.search_sharp,
-                color: _currentIndex == 1 ? AppColor.primary : AppColor.white,
+                color: _currentIndex == 1 ? AppColor.primary : AppColor.grey,
                 size: _currentIndex == 1 ? 40 : 30,
               ),
             ),
             TabItem(
               icon: Icon(
                 Icons.favorite,
-                color: _currentIndex == 2 ? AppColor.primary : AppColor.white,
+                color: _currentIndex == 2 ? AppColor.primary : AppColor.grey,
                 size: _currentIndex == 2 ? 40 : 30,
               ),
             ),
             TabItem(
               icon: Icon(
                 Icons.person_2,
-                color: _currentIndex == 3 ? AppColor.primary : AppColor.white,
+                color: _currentIndex == 3 ? AppColor.primary : AppColor.grey,
                 size: _currentIndex == 3 ? 40 : 30,
               ),
             ),
           ],
           onTap: _chnageIndex,
-          backgroundColor: AppColor.secondPrimary,
-          height: 17.h,
-          color: AppColor.primary,
+          backgroundColor: AppColor.black.withValues(alpha: 0.4),
+          height: 13.h,
+          color: AppColor.black,
+          activeColor: AppColor.grey.withValues(alpha: 0.2),
         ),
       ),
     );

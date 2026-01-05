@@ -51,7 +51,7 @@ class MovieData extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  Icon(Icons.add),
+                  Icon(Icons.bookmark),
                   Text('My List', style: AppText.regular16),
                 ],
               ),
@@ -74,4 +74,3 @@ class MovieData extends StatelessWidget {
     );
   }
 }
-

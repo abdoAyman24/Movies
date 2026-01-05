@@ -10,7 +10,7 @@ import 'package:movies/core/service/service_locator.dart';
 import 'package:movies/core/utils/AppTheme.dart';
 import 'package:movies/feature/auth/domain/repo/auth_repo.dart';
 import 'package:movies/feature/auth/presentation/manager/cubit/auth_cubit.dart';
-import 'package:movies/feature/home/presentation/view/main_view.dart';
+import 'package:movies/main_view.dart';
 import 'package:movies/feature/on_bording/presentation/view/on_bording.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:movies/firebase_options.dart';
