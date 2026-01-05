@@ -62,4 +62,21 @@ class ApiService {
 
     return Response.data;
   }
+  Future<Map<String, dynamic>> featchWatchedlist(
+) async {
+    late var Response;
+
+    Response = await _dio.get(
+      '${baseUrl}account/e610a9e4aea5e6cc384486c10e1bb4d8/watchlist/movies?language=en-US&page=1&sort_by=created_at.asc',
+      options: Options(
+        headers: {
+          'Authorization': EndPoint.userAccessToken,
+          'Accept': 'application/json',
+        },
+      ),
+    );
+
+    return Response.data;
+  }
+
 }

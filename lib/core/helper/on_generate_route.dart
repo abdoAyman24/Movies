@@ -6,7 +6,7 @@ import 'package:movies/feature/auth/presentation/View/register.dart';
 import 'package:movies/feature/favorite/presentation/manager/cubit/favorite_cubit.dart';
 import 'package:movies/feature/home/domain/entity/movie_entity.dart';
 import 'package:movies/main_view.dart';
-import 'package:movies/feature/home/presentation/view/movies_grid_view.dart';
+import 'package:movies/feature/home/presentation/view/widget/movies_grid_view.dart';
 import 'package:movies/feature/home/presentation/view/widget/movie_detailes.dart';
 import 'package:movies/feature/on_bording/presentation/view/on_bording.dart';
 
@@ -50,7 +50,16 @@ Route<dynamic> onGenerateRoute(RouteSettings setting) {
 
 
     case MoviesGridView.routName:
-      return MaterialPageRoute(builder: (context) => MoviesList());
+    final args = setting.arguments as Map<String, dynamic>;
+
+      final movies = args['Movie'] as List<MovieEntity>;
+      final favoriteCubit = args['favoriteCubit'] as FavoriteCubit;
+      return  MaterialPageRoute(
+        builder: (context) => MultiBlocProvider(
+          providers: [BlocProvider.value(value: favoriteCubit)],
+          child: MoviesGridView(movies: movies),
+        ),
+      );
 
     default:
       return MaterialPageRoute(builder: (context) => const Scaffold());

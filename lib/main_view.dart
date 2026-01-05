@@ -51,12 +51,7 @@ class _MainViewState extends State<MainView> {
       child: Scaffold(
         body: IndexedStack(
           index: _currentIndex,
-          children: [
-            Home(),
-            const SearchView(),
-            const Favorite(),
-            const Profile(),
-          ],
+          children: [Home(), SearchView(), Favorite(), Profile()],
         ),
         bottomNavigationBar: ConvexAppBar(
           items: [

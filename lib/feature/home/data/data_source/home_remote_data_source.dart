@@ -15,7 +15,7 @@ abstract class HomeRemoteDataSource {
   Future<Either<Failure, void>> deleteFromFavorite({required int movieId});
   Future<Either<Failure, List<MovieEntity>>> featchPopularThisWeek();
   Future<Either<Failure, List<MovieEntity>>> featchFavotriteMovies();
-
+Future<Either<Failure, List<MovieEntity>>> featchWatchedlist();
   Future<Either<Failure, List<MovieEntity>>> movieSearch({
     required String movietitle,
   });
@@ -146,6 +146,24 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
       await apiService.Favorite(movieId, );
 
       return Right(null);
+    } catch (e) {
+      return Left(ServerFailure(message: e.toString()));
+    }
+  }
+  
+  @override
+  Future<Either<Failure, List<MovieEntity>>> featchWatchedlist() async{
+  try {
+      var data = await apiService.featchWatchedlist();
+      List<MovieModel> moviesModel = List<MovieModel>.from(
+        (data['results'] as List).map(
+          (e) => MovieModel.fromJson(e as Map<String, dynamic>),
+        ),
+      );
+      List<MovieEntity> moviesEntity = moviesModel
+          .map((e) => e.toEntity())
+          .toList();
+      return Right(moviesEntity);
     } catch (e) {
       return Left(ServerFailure(message: e.toString()));
     }

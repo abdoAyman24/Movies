@@ -41,25 +41,27 @@ class FavoriteCubit extends Cubit<FavoriteState> {
     );
   }
 
-  void deleteFromFavorite(int movieId) async{
+  void deleteFromFavorite(int movieId) async {
     emit(FavoriteLoad());
 
-    var result = await homeRemoteDataSource.deleteFromFavorite(movieId: movieId);
+    var result = await homeRemoteDataSource.deleteFromFavorite(
+      movieId: movieId,
+    );
     result.fold(
       (l) {
         emit(FavoriteFailure(errorMessage: l.message));
       },
       (r) {
-        emit(SuccessAddMoviesToFavorite());
+        emit(RemoveMovieFromFavorite());
       },
     );
   }
 
-  void addmovieToFavorite(MovieEntity movie) {
-    emit(FavoriteLoad());
+  // void addmovieToFavorite(MovieEntity movie) {
+  //   emit(FavoriteLoad());
 
-    favoriteMovie.addMovieToFavorite(movie);
-    emit(AddMoviesToFavorite());
-   
-  }
+  //   favoriteMovie.addMovieToFavorite(movie);
+  //   emit(AddMoviesToFavorite());
+
+  // }
 }
