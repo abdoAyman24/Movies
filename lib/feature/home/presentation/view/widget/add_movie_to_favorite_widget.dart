@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies/feature/favorite/presentation/manager/cubit/favorite_cubit.dart';
@@ -20,8 +22,9 @@ class AddMovieToFavoriteWidget extends StatelessWidget {
       },
       child: BlocConsumer<FavoriteCubit, FavoriteState>(
         listener: (context, state) {
-          if (state is AddMoviesToFavorite ||
+          if (state is SuccessAddMoviesToFavorite ||
               state is RemoveMovieFromFavorite) {
+            log('feat favorite');
             context.read<FavoriteCubit>().featchFavoriteMovies();
           }
         },
