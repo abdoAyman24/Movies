@@ -6,10 +6,13 @@ import 'package:movies/conatant.dart';
 import 'package:movies/config/simple_bloce_observer.dart';
 import 'package:movies/core/cache/cach_helper_with_secure.dart';
 import 'package:movies/core/helper/on_generate_route.dart';
+import 'package:movies/core/helper/watched_list_movies.dart';
 import 'package:movies/core/service/service_locator.dart';
 import 'package:movies/core/utils/AppTheme.dart';
 import 'package:movies/feature/auth/domain/repo/auth_repo.dart';
 import 'package:movies/feature/auth/presentation/manager/cubit/auth_cubit.dart';
+import 'package:movies/feature/list/data/data_source/watched_list_remote_data_source.dart';
+import 'package:movies/feature/list/presentation/manager/cubit/watched_list_cubit.dart';
 import 'package:movies/main_view.dart';
 import 'package:movies/feature/on_bording/presentation/view/on_bording.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -34,8 +37,16 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(192, 245),
       builder: (context, child) {
-        return BlocProvider(
-          create: (context) => AuthCubit(getIt.get<AuthRepo>()),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => AuthCubit(getIt.get<AuthRepo>())),
+            BlocProvider(
+              create: (context) => WatchedListCubit(
+                getIt.get<WatchedListRemotDataSource>(),
+                getIt.get<WatchedListMovies>(),
+              ),
+            ),
+          ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             localizationsDelegates: [

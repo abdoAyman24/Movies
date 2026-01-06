@@ -14,6 +14,7 @@ import 'package:movies/feature/home/presentation/manager/top_rate_cubit/top_rate
 import 'package:movies/feature/home/presentation/view/home.dart';
 import 'package:movies/feature/home/presentation/view/search_view.dart';
 import 'package:movies/feature/favorite/presentation/view/favorite.dart';
+import 'package:movies/feature/list/presentation/manager/cubit/watched_list_cubit.dart';
 
 class MainView extends StatefulWidget {
   const MainView({super.key});
@@ -25,6 +26,13 @@ class MainView extends StatefulWidget {
 
 class _MainViewState extends State<MainView> {
   int _currentIndex = 0;
+
+  @override
+  void initState() {
+    context.read<WatchedListCubit>().featchWatchedList();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies/core/utils/app_text_styles.dart';
+import 'package:movies/core/widget/add_to_watched_list_widget.dart';
 import 'package:movies/feature/home/domain/entity/movie_entity.dart';
 import 'package:movies/feature/home/presentation/view/widget/add_movie_to_favorite_widget.dart';
 import 'package:movies/feature/home/presentation/view/widget/star.dart';
@@ -51,7 +52,7 @@ class MovieData extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  Icon(Icons.bookmark),
+                  AddToWatchedListWidget(movie: movie),
                   Text('My List', style: AppText.regular16),
                 ],
               ),

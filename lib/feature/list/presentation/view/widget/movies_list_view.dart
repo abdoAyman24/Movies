@@ -17,7 +17,7 @@ class MoviesListViewBody extends StatefulWidget {
 class _MoviesListViewBodyState extends State<MoviesListViewBody> {
   @override
   void initState() {
-    context.read<WatchedListCubit>().featchWatchedList();
+    //context.read<WatchedListCubit>().featchWatchedList();
     super.initState();
   }
 
@@ -58,9 +58,18 @@ class _MoviesListViewBodyState extends State<MoviesListViewBody> {
                         child: CustomMoviesGridViewBody(movies: dummyMovies),
                       ),
                     );
-                  } else if (state is WatchedListSuccess) {
+                  } else if (context
+                      .read<WatchedListCubit>()
+                      .watchedListMovies
+                      .watchListMovies
+                      .isNotEmpty) {
                     return Expanded(
-                      child: CustomMoviesGridViewBody(movies: dummyMovies),
+                      child: CustomMoviesGridViewBody(
+                        movies: context
+                            .watch<WatchedListCubit>()
+                            .watchedListMovies
+                            .watchListMovies,
+                      ),
                     );
                   } else {
                     return Expanded(

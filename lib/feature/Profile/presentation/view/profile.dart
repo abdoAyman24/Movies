@@ -9,10 +9,9 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: appBarBuilder(context: context, title: 'Profile', icon: Icons.arrow_back_ios_new),
-        body:  ProfileView()
+        appBar: appBarBuilder(context: context, title: 'Profile'),
+        body: ProfileView(),
       ),
     );
   }
 }
-
