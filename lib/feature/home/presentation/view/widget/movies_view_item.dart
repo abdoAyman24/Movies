@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies/core/utils/app_color.dart';
 import 'package:movies/core/utils/app_text_styles.dart';
 import 'package:movies/core/widget/custom_cach_network_image.dart';
-import 'package:movies/feature/favorite/presentation/manager/cubit/favorite_cubit.dart';
 import 'package:movies/feature/home/domain/entity/movie_entity.dart';
 import 'package:movies/feature/home/presentation/view/widget/movie_detailes.dart';
 import 'package:movies/feature/home/presentation/view/widget/star.dart';
@@ -18,17 +16,14 @@ class MoviesViewItem extends StatelessWidget {
         Navigator.pushNamed(
           context,
           MovieDetailes.routeName,
-          arguments: {
-            'Movie': movie, // MovieEntity
-            'favoriteCubit': context.read<FavoriteCubit>(),
-          },
+          arguments: movie,
         );
       },
       child: Container(
         decoration: BoxDecoration(
           border: BoxBorder.all(width: 1.3, color: AppColor.grey),
           borderRadius: BorderRadius.circular(10),
-          color: AppColor.black.withValues(alpha: 0.5),
+          color: AppColor.grey.withValues(alpha: 0.29),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 15),

@@ -1,25 +1,11 @@
+
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies/core/dummy/dummy_movies.dart';
 import 'package:movies/core/utils/app_text_styles.dart';
 import 'package:movies/core/widget/custom_back_ground.dart';
-import 'package:movies/core/widget/custom_movies_grid_view_body.dart';
-import 'package:movies/feature/list/presentation/manager/cubit/watched_list_cubit.dart';
-import 'package:skeletonizer/skeletonizer.dart';
+import 'package:movies/feature/list/presentation/view/widget/movies_list_view_body.dart';
 
-class MoviesListViewBody extends StatefulWidget {
-  const MoviesListViewBody({super.key});
-
-  @override
-  State<MoviesListViewBody> createState() => _MoviesListViewBodyState();
-}
-
-class _MoviesListViewBodyState extends State<MoviesListViewBody> {
-  @override
-  void initState() {
-    //context.read<WatchedListCubit>().featchWatchedList();
-    super.initState();
-  }
+class MoviesListView extends StatelessWidget {
+  const MoviesListView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,55 +35,7 @@ class _MoviesListViewBodyState extends State<MoviesListViewBody> {
                 ],
               ),
               const SizedBox(height: 20),
-
-              BlocBuilder<WatchedListCubit, WatchedListState>(
-                builder: (context, state) {
-                  if (state is WatchedListLoad) {
-                    return Expanded(
-                      child: Skeletonizer(
-                        child: CustomMoviesGridViewBody(movies: dummyMovies),
-                      ),
-                    );
-                  } else if (context
-                      .read<WatchedListCubit>()
-                      .watchedListMovies
-                      .watchListMovies
-                      .isNotEmpty) {
-                    return Expanded(
-                      child: CustomMoviesGridViewBody(
-                        movies: context
-                            .watch<WatchedListCubit>()
-                            .watchedListMovies
-                            .watchListMovies,
-                      ),
-                    );
-                  } else {
-                    return Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-
-                        children: [
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            child: Center(
-                              child: Column(
-                                children: [
-                                  Icon(Icons.list_outlined, size: 50),
-                                  const SizedBox(height: 10),
-                                  Text(
-                                    'Watched list is empty',
-                                    style: AppText.bold20,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  }
-                },
-              ),
+              MoviesListViewBody(),
             ],
           ),
         ),
@@ -105,3 +43,4 @@ class _MoviesListViewBodyState extends State<MoviesListViewBody> {
     );
   }
 }
+

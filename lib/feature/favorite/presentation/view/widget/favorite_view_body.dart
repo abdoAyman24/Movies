@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies/core/dummy/dummy_movies.dart';
@@ -14,8 +15,8 @@ class FavoriteViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<FavoriteCubit, FavoriteState>(
       builder: (context, state) {
-       
         if (state is FavoriteLoad) {
+
           return Expanded(
             child: Skeletonizer(
               child: CustomMoviesGridViewBody(movies: dummyMovies),
@@ -24,26 +25,30 @@ class FavoriteViewBody extends StatelessWidget {
         } else if (state is FavoriteSuccess ||
             state is AddMoviesToFavorite ||
             state is RemoveMovieFromFavorite) {
+
           return Expanded(
             child: CustomMoviesGridViewBody(
-              movies: context.watch<FavoriteCubit>().favoriteMovie.favoriteMovies,
+              movies: context
+                  .watch<FavoriteCubit>()
+                  .favoriteMovie
+                  .favoriteMovies,
             ),
           );
         } else {
           return Expanded(
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width,
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
 
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(Icons.movie_outlined, color: AppColor.black),
-                Text('Empty', style: AppText.bold20),
-              ],
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(Icons.movie_outlined, color: AppColor.black),
+                  Text('Empty', style: AppText.bold20),
+                ],
+              ),
             ),
-          ),
-        );
+          );
         }
       },
     );

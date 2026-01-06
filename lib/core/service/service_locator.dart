@@ -8,6 +8,7 @@ import 'package:movies/core/service/fire_store_service.dart';
 import 'package:movies/core/service/firebase_auth_service.dart';
 import 'package:movies/feature/auth/data/repo_impl/auth_repo_impl.dart';
 import 'package:movies/feature/auth/domain/repo/auth_repo.dart';
+import 'package:movies/feature/favorite/data/data_source/favorite_remote_data_source.dart';
 import 'package:movies/feature/home/data/data_source/home_remote_data_source.dart';
 import 'package:movies/feature/list/data/data_source/watched_list_remote_data_source.dart';
 
@@ -22,6 +23,9 @@ void setUpGetIt() {
   getIt.registerSingleton<ApiService>(ApiService(Dio()));
   getIt.registerSingleton<HomeRemoteDataSource>(
     HomeRemoteDataSourceImpl(apiService: getIt.get<ApiService>()),
+  );
+  getIt.registerSingleton<FavoriteRemoteDataSource>(
+    FavoriteRemoteDataSourceImpl(apiService: getIt.get<ApiService>()),
   );
 
   getIt.registerSingleton<WatchedListRemotDataSource>(

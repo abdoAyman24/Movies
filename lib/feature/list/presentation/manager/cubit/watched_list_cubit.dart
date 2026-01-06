@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -15,17 +14,16 @@ class WatchedListCubit extends Cubit<WatchedListState> {
   final WatchedListMovies watchedListMovies;
   void featchWatchedList() async {
     emit(WatchedListLoad());
+    watchedListMovies.deleteAllMovieFromWatchedList();
     var result = await watchedListRemotDataSource.featchWatchedList();
 
     result.fold(
       (l) {
         emit(WatchedListFailure(errorMessage: l.message));
-
       },
       (r) {
-        emit(WatchedListSuccess(movies: r));
         watchedListMovies.addAllMovieToWatchedList(r);
-       
+        emit(WatchedListSuccess(movies: r));
       },
     );
   }
@@ -35,18 +33,18 @@ class WatchedListCubit extends Cubit<WatchedListState> {
     var result = await watchedListRemotDataSource.addToWatchedList(movie.id);
     result.fold(
       (l) {
-        log(l.message.toString());
         emit(WatchedListFailure(errorMessage: l.message));
       },
       (r) {
-        emit(AddMovieToWatchedListSuccess());
         watchedListMovies.addMovieToWAtchedList(movie);
+        emit(AddMovieToWatchedListSuccess());
       },
     );
   }
 
   void deleteMovieFromWatchedList(MovieEntity movie) async {
     emit(WatchedListLoad());
+    watchedListMovies.deleteMovieFromWatchedList(movie);
 
     var result = await watchedListRemotDataSource.deleteFromWatchedList(
       movie.id,
@@ -57,7 +55,6 @@ class WatchedListCubit extends Cubit<WatchedListState> {
       },
       (r) {
         emit(DeleteMoviefromWatchedListSuccess());
-        watchedListMovies.deleteMovieFromWatchedList(movie);
       },
     );
   }

@@ -11,16 +11,17 @@ class CustomBackGround extends StatelessWidget {
         Expanded(
           child: Container(
             decoration: ShapeDecoration(
-              gradient: LinearGradient(
-                begin: Alignment(0, -0.8),
-                end: Alignment(0.5, 1),
-                colors: [
-                  AppColor.secondPrimary,
-                  AppColor.primary,
-                  AppColor.secondPrimary,
-                ],
-                tileMode: TileMode.clamp,
-              ),
+              color: AppColor.black,
+              // gradient: LinearGradient(
+              //   begin: Alignment(0, -0.8),
+              //   end: Alignment(0.5, 1),
+              //   colors: [
+              //     AppColor.secondPrimary,
+              //     AppColor.primary,
+              //     AppColor.secondPrimary,
+              //   ],
+              //   tileMode: TileMode.clamp,
+              // ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(4),
               ),
