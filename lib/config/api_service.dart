@@ -27,7 +27,7 @@ class ApiService {
     late var Response;
 
     Response = await _dio.get(
-      '${baseUrl}account/e610a9e4aea5e6cc384486c10e1bb4d8/favorite/movies?language=en-US&page=1&sort_by=created_at.asc',
+      '${baseUrl}account/${EndPoint.userId}/favorite/movies?language=en-US&page=1&sort_by=created_at.asc',
       options: Options(
         headers: {
           'Authorization': EndPoint.userAccessToken,
@@ -39,14 +39,12 @@ class ApiService {
     return Response.data;
   }
 
-  Future<Map<String, dynamic>> Favorite(
+  Future<Map<String, dynamic>> favorite(
     int movieId, {
     bool addTOFavorite = false,
   }) async {
-    late var Response;
-
-    Response = await _dio.post(
-      '${baseUrl}account/e610a9e4aea5e6cc384486c10e1bb4d8/favorite',
+    var response = await _dio.post(
+      '${baseUrl}account/${EndPoint.userId}/favorite',
       options: Options(
         headers: {
           'Authorization': EndPoint.userAccessToken,
@@ -60,6 +58,44 @@ class ApiService {
       },
     );
 
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> featchWatchedlist() async {
+    late var Response;
+
+    Response = await _dio.get(
+      '${baseUrl}account/${EndPoint.userId}/watchlist/movies?language=en-US&sort_by=created_at.asc',
+      options: Options(
+        headers: {
+          'Authorization': EndPoint.userAccessToken,
+          'Accept': 'application/json',
+        },
+      ),
+    );
+
     return Response.data;
+  }
+
+  Future<Map<String, dynamic>> watchedList(
+    int movieId, {
+    bool addTOWatchedList = false,
+  }) async {
+    var response = await _dio.post(
+      '${baseUrl}account/${EndPoint.userId}/watchlist',
+      options: Options(
+        headers: {
+          'Authorization': EndPoint.userAccessToken,
+          'Accept': 'application/json',
+        },
+      ),
+      data: {
+        "media_type": "movie",
+        "media_id": movieId,
+        "watchlist": addTOWatchedList,
+      },
+    );
+
+    return response.data;
   }
 }

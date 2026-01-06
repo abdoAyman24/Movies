@@ -15,10 +15,14 @@ class MoviesViewItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, MovieDetailes.routeName, arguments: {
-                    'Movie': movie, // MovieEntity
-                    'favoriteCubit': context.read<FavoriteCubit>(),
-                  },);
+        Navigator.pushNamed(
+          context,
+          MovieDetailes.routeName,
+          arguments: {
+            'Movie': movie, // MovieEntity
+            'favoriteCubit': context.read<FavoriteCubit>(),
+          },
+        );
       },
       child: Container(
         decoration: BoxDecoration(
@@ -63,7 +67,7 @@ class MoviesViewItem extends StatelessWidget {
 
                         Text(
                           movie.popularity.toString(),
-                          style: AppText.bold19,
+                          style: AppText.semiBold16,
                         ),
                       ],
                     ),
@@ -79,4 +83,3 @@ class MoviesViewItem extends StatelessWidget {
     );
   }
 }
-

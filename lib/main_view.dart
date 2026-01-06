@@ -14,6 +14,7 @@ import 'package:movies/feature/home/presentation/manager/top_rate_cubit/top_rate
 import 'package:movies/feature/home/presentation/view/home.dart';
 import 'package:movies/feature/home/presentation/view/search_view.dart';
 import 'package:movies/feature/favorite/presentation/view/favorite.dart';
+import 'package:movies/feature/list/presentation/manager/cubit/watched_list_cubit.dart';
 
 class MainView extends StatefulWidget {
   const MainView({super.key});
@@ -25,6 +26,13 @@ class MainView extends StatefulWidget {
 
 class _MainViewState extends State<MainView> {
   int _currentIndex = 0;
+
+  @override
+  void initState() {
+    context.read<WatchedListCubit>().featchWatchedList();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -42,55 +50,53 @@ class _MainViewState extends State<MainView> {
               TopRateCubit(getIt.get<HomeRemoteDataSource>()),
         ),
         BlocProvider(
-          create: (BuildContext context) =>
-              FavoriteCubit(getIt.get<HomeRemoteDataSource>(),getIt.get<FavoriteMovie>()),
+          create: (BuildContext context) => FavoriteCubit(
+            getIt.get<HomeRemoteDataSource>(),
+            getIt.get<FavoriteMovie>(),
+          ),
         ),
       ],
       child: Scaffold(
         body: IndexedStack(
           index: _currentIndex,
-          children: [
-            Home(),
-            const SearchView(),
-            const Favorite(),
-            const Profile(),
-          ],
+          children: [Home(), SearchView(), Favorite(), Profile()],
         ),
         bottomNavigationBar: ConvexAppBar(
           items: [
             TabItem(
               icon: Icon(
                 Icons.home,
-                color: _currentIndex == 0 ? AppColor.primary : AppColor.white,
+                color: _currentIndex == 0 ? AppColor.primary : AppColor.grey,
                 size: _currentIndex == 0 ? 40 : 30,
               ),
             ),
             TabItem(
               icon: Icon(
                 Icons.search_sharp,
-                color: _currentIndex == 1 ? AppColor.primary : AppColor.white,
+                color: _currentIndex == 1 ? AppColor.primary : AppColor.grey,
                 size: _currentIndex == 1 ? 40 : 30,
               ),
             ),
             TabItem(
               icon: Icon(
                 Icons.favorite,
-                color: _currentIndex == 2 ? AppColor.primary : AppColor.white,
+                color: _currentIndex == 2 ? AppColor.primary : AppColor.grey,
                 size: _currentIndex == 2 ? 40 : 30,
               ),
             ),
             TabItem(
               icon: Icon(
                 Icons.person_2,
-                color: _currentIndex == 3 ? AppColor.primary : AppColor.white,
+                color: _currentIndex == 3 ? AppColor.primary : AppColor.grey,
                 size: _currentIndex == 3 ? 40 : 30,
               ),
             ),
           ],
           onTap: _chnageIndex,
-          backgroundColor: AppColor.secondPrimary,
-          height: 17.h,
-          color: AppColor.primary,
+          backgroundColor: AppColor.black.withValues(alpha: 0.4),
+          height: 13.h,
+          color: AppColor.black,
+          activeColor: AppColor.grey.withValues(alpha: 0.2),
         ),
       ),
     );

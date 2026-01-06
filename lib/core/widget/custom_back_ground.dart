@@ -15,11 +15,9 @@ class CustomBackGround extends StatelessWidget {
                 begin: Alignment(0, -0.8),
                 end: Alignment(0.5, 1),
                 colors: [
+                  AppColor.secondPrimary,
                   AppColor.primary,
                   AppColor.secondPrimary,
-                  AppColor.secondPrimary,
-
-                  AppColor.black.withValues(alpha: 2),
                 ],
                 tileMode: TileMode.clamp,
               ),
