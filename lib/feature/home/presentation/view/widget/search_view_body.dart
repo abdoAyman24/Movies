@@ -22,7 +22,7 @@ class SearchViewBody extends StatelessWidget {
             context.read<MovieSearchCubit>().movieSearch(movietitle: value);
           },
           keyboardType: TextInputType.text,
-          textFormColor: AppColor.black.withValues(alpha: 0.5),
+          textFormColor: AppColor.grey.withValues(alpha: 0.5),
           preffixIcon: Icon(Icons.search_rounded, color: AppColor.white),
         ),
         BlocBuilder<MovieSearchCubit, MovieSearchState>(

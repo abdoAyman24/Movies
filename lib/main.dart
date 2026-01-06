@@ -5,12 +5,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies/conatant.dart';
 import 'package:movies/config/simple_bloce_observer.dart';
 import 'package:movies/core/cache/cach_helper_with_secure.dart';
+import 'package:movies/core/helper/favorite_movie.dart';
 import 'package:movies/core/helper/on_generate_route.dart';
 import 'package:movies/core/helper/watched_list_movies.dart';
 import 'package:movies/core/service/service_locator.dart';
 import 'package:movies/core/utils/AppTheme.dart';
 import 'package:movies/feature/auth/domain/repo/auth_repo.dart';
 import 'package:movies/feature/auth/presentation/manager/cubit/auth_cubit.dart';
+import 'package:movies/feature/favorite/data/data_source/favorite_remote_data_source.dart';
+import 'package:movies/feature/favorite/presentation/manager/cubit/favorite_cubit.dart';
 import 'package:movies/feature/list/data/data_source/watched_list_remote_data_source.dart';
 import 'package:movies/feature/list/presentation/manager/cubit/watched_list_cubit.dart';
 import 'package:movies/main_view.dart';
@@ -46,6 +49,12 @@ class MyApp extends StatelessWidget {
                 getIt.get<WatchedListMovies>(),
               ),
             ),
+             BlocProvider(
+          create: (BuildContext context) => FavoriteCubit(
+            getIt.get<FavoriteRemoteDataSource>(),
+            getIt.get<FavoriteMovie>(),
+          ),
+        ),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,

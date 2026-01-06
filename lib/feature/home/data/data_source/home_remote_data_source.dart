@@ -11,10 +11,8 @@ abstract class HomeRemoteDataSource {
   Future<Either<Failure, List<MovieEntity>>> featchRecommendMovies({
     required int movieId,
   });
-  Future<Either<Failure, void>> addToFavorite({required int movieId});
-  Future<Either<Failure, void>> deleteFromFavorite({required int movieId});
   Future<Either<Failure, List<MovieEntity>>> featchPopularThisWeek();
-  Future<Either<Failure, List<MovieEntity>>> featchFavotriteMovies();
+  
   Future<Either<Failure, List<MovieEntity>>> movieSearch({
     required String movietitle,
   });
@@ -108,47 +106,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
     }
   }
 
-  @override
-  Future<Either<Failure, List<MovieEntity>>> featchFavotriteMovies() async {
-    try {
-      var data = await apiService.getFavorite();
-      List<MovieModel> moviesModel = List<MovieModel>.from(
-        (data['results'] as List).map(
-          (e) => MovieModel.fromJson(e as Map<String, dynamic>),
-        ),
-      );
-      List<MovieEntity> moviesEntity = moviesModel
-          .map((e) => e.toEntity())
-          .toList();
-      return Right(moviesEntity);
-    } catch (e) {
-      return Left(ServerFailure(message: e.toString()));
-    }
-  }
-
-  @override
-  Future<Either<Failure, void>> addToFavorite({required int movieId}) async {
-    try {
-      await apiService.favorite(movieId, addTOFavorite: true);
-
-      return Right(null);
-    } catch (e) {
-      return Left(ServerFailure(message: e.toString()));
-    }
-  }
-
-  @override
-  Future<Either<Failure, void>> deleteFromFavorite({
-    required int movieId,
-  }) async {
-    try {
-      await apiService.favorite(movieId);
-
-      return Right(null);
-    } catch (e) {
-      return Left(ServerFailure(message: e.toString()));
-    }
-  }
+  
 }
 
 // {

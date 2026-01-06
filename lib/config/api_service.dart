@@ -27,7 +27,7 @@ class ApiService {
     late var Response;
 
     Response = await _dio.get(
-      '${baseUrl}account/${EndPoint.userId}/favorite/movies?language=en-US&page=1&sort_by=created_at.asc',
+      '${baseUrl}account/${EndPoint.userId}/favorite/movies?language=en-US&sort_by=created_at.asc',
       options: Options(
         headers: {
           'Authorization': EndPoint.userAccessToken,

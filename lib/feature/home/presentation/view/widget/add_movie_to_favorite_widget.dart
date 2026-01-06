@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies/feature/favorite/presentation/manager/cubit/favorite_cubit.dart';
@@ -13,23 +15,26 @@ class AddMovieToFavoriteWidget extends StatelessWidget {
     return InkWell(
       onTap: () {
         if (context.read<FavoriteCubit>().favoriteMovie.isExist(movie)) {
-          context.read<FavoriteCubit>().deleteFromFavorite(movie.id.toInt());
-          Future.delayed(Duration(seconds: 1), () {
-            context.read<FavoriteCubit>().featchFavoriteMovies();
-          });
+          context.read<FavoriteCubit>().deleteFromFavorite(movie);
         } else {
-          context.read<FavoriteCubit>().addMovieToFavorite(movie.id.toInt());
-          Future.delayed(Duration(seconds: 1), () {
-            context.read<FavoriteCubit>().featchFavoriteMovies();
-          });
+          context.read<FavoriteCubit>().addMovieToFavorite(movie);
         }
       },
-      child: BlocBuilder<FavoriteCubit, FavoriteState>(
+      child: BlocConsumer<FavoriteCubit, FavoriteState>(
+        listener: (context, state) {
+          if (state is SuccessAddMoviesToFavorite ||
+              state is RemoveMovieFromFavorite) {
+            log('feat favorite');
+            context.read<FavoriteCubit>().featchFavoriteMovies();
+          }
+        },
         builder: (context, state) {
-          if (state is FavoriteLoad || state is SuccessAddMoviesToFavorite) {
+          if (state is FavoriteLoad ||
+              state is SuccessAddMoviesToFavorite ||
+              state is RemoveMovieFromFavorite) {
             return Center(child: CircularProgressIndicator());
           }
-          return context.watch<FavoriteCubit>().favoriteMovie.isExist(movie)
+          return context.read<FavoriteCubit>().favoriteMovie.isExist(movie)
               ? Icon(Icons.favorite, color: Colors.red)
               : Icon(Icons.favorite);
         },

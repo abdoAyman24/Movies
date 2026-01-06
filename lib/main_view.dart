@@ -2,7 +2,6 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:movies/core/helper/favorite_movie.dart';
 import 'package:movies/core/service/service_locator.dart';
 import 'package:movies/core/utils/app_color.dart';
 import 'package:movies/feature/Profile/presentation/view/profile.dart';
@@ -30,6 +29,7 @@ class _MainViewState extends State<MainView> {
   @override
   void initState() {
     context.read<WatchedListCubit>().featchWatchedList();
+    context.read<FavoriteCubit>().featchFavoriteMovies();
     super.initState();
   }
 
@@ -48,12 +48,6 @@ class _MainViewState extends State<MainView> {
         BlocProvider(
           create: (BuildContext context) =>
               TopRateCubit(getIt.get<HomeRemoteDataSource>()),
-        ),
-        BlocProvider(
-          create: (BuildContext context) => FavoriteCubit(
-            getIt.get<HomeRemoteDataSource>(),
-            getIt.get<FavoriteMovie>(),
-          ),
         ),
       ],
       child: Scaffold(

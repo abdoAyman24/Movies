@@ -1,13 +1,17 @@
 import 'package:movies/feature/home/domain/entity/movie_entity.dart';
 
 class WatchedListMovies {
- final List<MovieEntity> watchListMovies = [];
+  final List<MovieEntity> watchListMovies = [];
   void addAllMovieToWatchedList(List<MovieEntity> movies) {
     watchListMovies.addAll(movies);
   }
 
   void deleteMovieFromWatchedList(MovieEntity movie) {
     watchListMovies.remove(movie);
+  }
+
+  void deleteAllMovieFromWatchedList() {
+    watchListMovies.clear();
   }
 
   void addMovieToWAtchedList(MovieEntity movie) {
