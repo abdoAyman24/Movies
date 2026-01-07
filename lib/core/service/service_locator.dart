@@ -9,8 +9,14 @@ import 'package:movies/core/service/firebase_auth_service.dart';
 import 'package:movies/feature/auth/data/repo_impl/auth_repo_impl.dart';
 import 'package:movies/feature/auth/domain/repo/auth_repo.dart';
 import 'package:movies/feature/favorite/data/data_source/favorite_remote_data_source.dart';
+import 'package:movies/feature/favorite/data/repo_impl/favorite_repo_impl.dart';
+import 'package:movies/feature/favorite/domain/repos/favorite_repo.dart';
 import 'package:movies/feature/home/data/data_source/home_remote_data_source.dart';
+import 'package:movies/feature/home/data/repo_impl/home_repo_impl.dart';
+import 'package:movies/feature/home/domain/repos/home_repo.dart';
 import 'package:movies/feature/list/data/data_source/watched_list_remote_data_source.dart';
+import 'package:movies/feature/list/data/repos_impl/watched_list_repo_impl.dart';
+import 'package:movies/feature/list/domain/repos/watched_list_repo.dart';
 
 final getIt = GetIt.instance;
 void setUpGetIt() {
@@ -24,13 +30,24 @@ void setUpGetIt() {
   getIt.registerSingleton<HomeRemoteDataSource>(
     HomeRemoteDataSourceImpl(apiService: getIt.get<ApiService>()),
   );
+
+  
   getIt.registerSingleton<FavoriteRemoteDataSource>(
     FavoriteRemoteDataSourceImpl(apiService: getIt.get<ApiService>()),
   );
-
   getIt.registerSingleton<WatchedListRemotDataSource>(
     WatchedListRemotDataSourceImpl(apiService: getIt.get<ApiService>()),
   );
+   getIt.registerSingleton<FavoriteRepo>(
+   FavoriteRepoImpl(favoriteRemoteDataSource: getIt.get<FavoriteRemoteDataSource>()));
+
+getIt.registerSingleton<HomeRepo>(
+   HomeRepoImpl(homeRemoteDataSource: getIt.get<HomeRemoteDataSource>()),
+  );
+
+ getIt.registerSingleton<WatchedListRepo>(
+ WatchedListRepoImpl(watchedListRemotDataSource:  getIt.get<WatchedListRemotDataSource>()));
+  
   getIt.registerSingleton<AuthRepo>(
     AuthRepoImpl(
       fireBaseAuthService: getIt.get<FireBaseAuthService>(),

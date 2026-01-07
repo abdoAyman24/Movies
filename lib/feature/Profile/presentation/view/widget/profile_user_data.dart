@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:movies/core/helper/get_user_data.dart';
 import 'package:movies/core/utils/app_color.dart';
@@ -9,6 +11,7 @@ class ProfileUserData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return Container(
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(

@@ -10,10 +10,10 @@ sealed class WatchedListState extends Equatable {
 final class WatchedListInitial extends WatchedListState {}
 
 final class WatchedListLoad extends WatchedListState {}
+
 final class AddMovieToWatchedListSuccess extends WatchedListState {}
+
 final class DeleteMoviefromWatchedListSuccess extends WatchedListState {}
-
-
 
 final class WatchedListSuccess extends WatchedListState {
   final List<MovieEntity> movies;
@@ -23,6 +23,6 @@ final class WatchedListSuccess extends WatchedListState {
 
 final class WatchedListFailure extends WatchedListState {
   final String errorMessage;
-
-  WatchedListFailure({required this.errorMessage});
+  final IconData icon;
+  WatchedListFailure({required this.icon, required this.errorMessage});
 }

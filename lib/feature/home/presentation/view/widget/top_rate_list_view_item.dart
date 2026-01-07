@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies/core/dummy/dummy_movies.dart';
+import 'package:movies/core/widget/custom_movies_error_widget.dart';
 
 import 'package:movies/feature/home/presentation/manager/top_rate_cubit/top_rate_cubit.dart';
 import 'package:movies/feature/home/presentation/view/widget/movies_list_view.dart';
@@ -27,10 +28,15 @@ class _TopRateListViewItemState extends State<TopRateListViewItem> {
         if (state is TopRateLoad) {
           return Skeletonizer(
             enabled: true,
-            child: MoviesListView(movies: dummyMovies),
+            child: MoviesListView(movies: dummyMovies,isLoad: true,),
           );
         } else if (state is TopRateSuccess) {
           return MoviesListView(movies: state.movies);
+        }else if (state is TopRateFailure) {
+          return CustomMoviesErrorWidget(
+            errorMessage: state.errorMessage,
+            icon: state.icon,
+          );
         } else {
           return Icon(Icons.error);
         }

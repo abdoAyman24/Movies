@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:movies/conatant.dart';
 import 'package:movies/core/cache/cach_helper_with_secure.dart';
-import 'package:movies/core/error/auth_faluire_service.dart';
+import 'package:movies/core/error/failuer.dart';
 import 'package:movies/core/error/custom_fire_base_excption.dart';
 import 'package:movies/core/service/data_base_service.dart';
 import 'package:movies/core/service/firebase_auth_service.dart';
@@ -23,7 +23,7 @@ class AuthRepoImpl implements AuthRepo {
   });
 
   @override
-  Future<Either<Failure, void>> createUserWithEmailAndPassword({
+  Future<Either<Failuer, void>> createUserWithEmailAndPassword({
     required String name,
     required String email,
     required String password,
@@ -34,22 +34,20 @@ class AuthRepoImpl implements AuthRepo {
         password: password,
       );
       UserModel userModel = UserModel(name: name, email: email);
-      log('create done');
       await dataBaseService.addUser(
         path: EndPoint.userCollection,
         json: userModel.toJson(),
         documentId: user.uid,
       );
-      log('store done');
 
       return Right(null);
     } on CustomFireBaseExcption catch (e) {
-      return left(ServerFailure(message: e.errorMessage));
+      return left(ServerFailuer(message: e.errorMessage,icon: Icons.error_outline));
     }
   }
 
   @override
-  Future<Either<Failure, UserEntity>> siginWithEmailAndPassword({
+  Future<Either<Failuer, UserEntity>> siginWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
@@ -64,9 +62,10 @@ class AuthRepoImpl implements AuthRepo {
       );
       UserModel userModel = UserModel.fromJson(userData);
       CacheHelper.set(key: KUserData, value: jsonEncode(userModel.toJson()));
+
       return right(userModel.toEntity());
     } on CustomFireBaseExcption catch (e) {
-      return left(ServerFailure(message: e.errorMessage));
+      return left(ServerFailuer(message: e.errorMessage,icon: Icons.error_outline));
     }
   }
 }

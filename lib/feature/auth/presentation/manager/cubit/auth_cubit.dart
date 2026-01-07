@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -27,7 +26,6 @@ class AuthCubit extends Cubit<AuthState> {
         emit(AuthFailure(errorMessage: l.message));
       },
       (r) {
-        log('success');
         emit(RegisterSuccess());
       },
     );

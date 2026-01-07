@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies/core/utils/app_icon.dart';
+import 'package:movies/core/dummy/dummy_movies.dart';
+import 'package:movies/core/widget/custom_movies_error_widget.dart';
 import 'package:movies/feature/home/presentation/manager/popular_cubit/popular_cubit.dart';
 import 'package:movies/feature/home/presentation/view/widget/movies_list_view.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -26,22 +27,15 @@ class _PopularListViewItemState extends State<PopularListViewItem> {
         if (state is PopularLoad) {
           return Skeletonizer(
             enabled: true,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return AspectRatio(
-                  aspectRatio: 0.7,
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 25),
-                    child: Image(image: AssetImage(Assets.imagesMovies)),
-                  ),
-                );
-              },
-            ),
+            child:  MoviesListView(movies: dummyMovies,isLoad: true,),
           );
         } else if (state is PopularSuccess) {
           return MoviesListView(movies: state.movies);
+        }else if (state is PopularFailure) {
+          return CustomMoviesErrorWidget(
+            errorMessage: state.errorMessage,
+            icon: state.icon,
+          );
         } else {
           return Icon(Icons.error);
         }

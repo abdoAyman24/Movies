@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -38,7 +37,6 @@ class FireBaseAuthService {
           errorMessage: 'The email address is badly formatted.',
         );
       } else {
-        log(e.toString());
         throw CustomFireBaseExcption(
           errorMessage: 'there is problem,try again later ${e.toString()}',
         );
@@ -72,7 +70,6 @@ class FireBaseAuthService {
           errorMessage: 'User Or Password not Correct.',
         );
       } else {
-        log(e.toString());
         throw CustomFireBaseExcption(
           errorMessage:
               'this is A problem,please try again later${e.credential}',

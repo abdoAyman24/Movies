@@ -8,15 +8,18 @@ sealed class NowPlayState extends Equatable {
 }
 
 final class NowPlayInitial extends NowPlayState {}
+
 final class NowPlayLoad extends NowPlayState {}
+
 final class NowPlaySuccess extends NowPlayState {
   final List<MovieEntity> movies;
 
   NowPlaySuccess({required this.movies});
 }
+
 final class NowPlayFailure extends NowPlayState {
-   final String errorMessage;
+  final String errorMessage;
+  final IconData icon;
 
-  NowPlayFailure({required this.errorMessage});
+  NowPlayFailure({required this.errorMessage,required this.icon});
 }
-

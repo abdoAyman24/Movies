@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies/core/dummy/dummy_movies.dart';
 import 'package:movies/core/utils/app_color.dart';
+import 'package:movies/core/widget/custom_movies_error_widget.dart';
 import 'package:movies/core/widget/custom_text_form_field.dart';
 import 'package:movies/feature/home/presentation/manager/movie_search_cubit/movie_search_cubit.dart';
 import 'package:movies/core/widget/custom_movies_grid_view_body.dart';
@@ -37,6 +38,18 @@ class SearchViewBody extends StatelessWidget {
             } else if (state is MovieSearchSuccess) {
               return Expanded(
                 child: CustomMoviesGridViewBody(movies: state.movies),
+              );
+            } else if (state is MovieSearchFailure) {
+              return Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomMoviesErrorWidget(
+                      errorMessage: state.errorMessage,
+                      icon: state.icon,
+                    ),
+                  ],
+                ),
               );
             } else {
               return Expanded(

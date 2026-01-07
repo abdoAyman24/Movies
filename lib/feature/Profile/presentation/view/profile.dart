@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:movies/core/helper/app_bar_builder.dart';
 import 'package:movies/feature/Profile/presentation/view/widget/profile_view.dart';
 
 class Profile extends StatelessWidget {
@@ -9,7 +8,7 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: appBarBuilder(context: context, title: 'Profile'),
+        // appBar: AppBar(title: Text('Profile'),),
         body: ProfileView(),
       ),
     );

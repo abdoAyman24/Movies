@@ -19,6 +19,6 @@ final class TrendSuccess extends TrendState {
 
 final class TrendFailure extends TrendState {
   final String errorMessage;
-
-  TrendFailure({required this.errorMessage});
+  final IconData icon;
+  TrendFailure({required this.icon, required this.errorMessage});
 }

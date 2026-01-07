@@ -19,6 +19,7 @@ final class MovieSearchSuccess extends MovieSearchState {
 
 final class MovieSearchFailure extends MovieSearchState {
   final String errorMessage;
+  final IconData icon;
 
-  MovieSearchFailure({required this.errorMessage});
+  MovieSearchFailure({required this.errorMessage,required this.icon});
 }

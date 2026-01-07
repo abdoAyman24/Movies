@@ -19,57 +19,58 @@ class Home extends StatelessWidget {
     return Stack(
       children: [
         CustomBackGround(),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(child: HomeWelcom()),
-              SliverToBoxAdapter(
-                child: MoviesTypeTitle(
-                  widget: NowPlayListViewItem(),
-                  moviesType: 'NowPlay',
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      MoviesGridView.routName,
-                      arguments:context
-                            .read<NowPlayCubit>()
-                            .movies,
-                    );
-                  },
+        RefreshIndicator(
+          onRefresh: () async {
+            context.read<NowPlayCubit>().featchNowPlaying();
+            context.read<PopularCubit>().featchPopular();
+            context.read<TopRateCubit>().featchTopRate();
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(child: HomeWelcom()),
+                SliverToBoxAdapter(
+                  child: MoviesTypeTitle(
+                    widget: NowPlayListViewItem(),
+                    moviesType: 'NowPlay',
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        MoviesGridView.routName,
+                        arguments: context.read<NowPlayCubit>().movies,
+                      );
+                    },
+                  ),
                 ),
-              ),
-              SliverToBoxAdapter(
-                child: MoviesTypeTitle(
-                  widget: PopularListViewItem(),
-                  moviesType: 'Popular',
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      MoviesGridView.routName,
-                      arguments:context
-                            .read<PopularCubit>()
-                            .movies,
-                    );
-                  },
+                SliverToBoxAdapter(
+                  child: MoviesTypeTitle(
+                    widget: PopularListViewItem(),
+                    moviesType: 'Popular',
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        MoviesGridView.routName,
+                        arguments: context.read<PopularCubit>().movies,
+                      );
+                    },
+                  ),
                 ),
-              ),
-              SliverToBoxAdapter(
-                child: MoviesTypeTitle(
-                  widget: TopRateListViewItem(),
-                  moviesType: 'Top Rated',
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      MoviesGridView.routName,
-                    arguments:context
-                            .read<TopRateCubit>()
-                            .movies, 
-                    );
-                  },
+                SliverToBoxAdapter(
+                  child: MoviesTypeTitle(
+                    widget: TopRateListViewItem(),
+                    moviesType: 'Top Rated',
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        MoviesGridView.routName,
+                        arguments: context.read<TopRateCubit>().movies,
+                      );
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ],

@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies/core/service/service_locator.dart';
 import 'package:movies/core/utils/app_text_styles.dart';
-import 'package:movies/feature/home/data/data_source/home_remote_data_source.dart';
 import 'package:movies/feature/home/domain/entity/movie_entity.dart';
+import 'package:movies/feature/home/domain/repos/home_repo.dart';
 import 'package:movies/feature/home/presentation/manager/recommend_movie_cubit/recommend_movies_cubit.dart';
 import 'package:movies/feature/home/presentation/manager/trend_cubit/trend_cubit.dart';
 import 'package:movies/feature/home/presentation/view/widget/back_bottom.dart';
@@ -26,11 +26,11 @@ class MovieDetailes extends StatelessWidget {
         providers: [
           BlocProvider(
             create: (BuildContext context) =>
-                TrendCubit(getIt.get<HomeRemoteDataSource>()),
+                TrendCubit(getIt.get<HomeRepo>()),
           ),
           BlocProvider(
             create: (BuildContext context) =>
-                RecommendMoviesCubit(getIt.get<HomeRemoteDataSource>()),
+                RecommendMoviesCubit(getIt.get<HomeRepo>()),
           ),
         ],
         child: Scaffold(
