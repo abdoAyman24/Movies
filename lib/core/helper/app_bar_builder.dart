@@ -11,11 +11,12 @@ PreferredSizeWidget appBarBuilder({
     backgroundColor: AppColor.secondPrimary,
     title: Text(title, style: AppText.bold23),
     centerTitle: true,
-    leading: icon != null
-        ? InkWell(
-            onTap: () => Navigator.pop(context),
-            child: Icon(icon, size: 28),
-          )
-        : null,
+    leading: null,
+    // leading: icon != null
+    //     ? InkWell(
+    //         onTap: () => Navigator.pop(context),
+    //         child: Icon(icon, size: 28),
+    //       )
+    //     : null,
   );
 }

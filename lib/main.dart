@@ -12,9 +12,9 @@ import 'package:movies/core/service/service_locator.dart';
 import 'package:movies/core/utils/AppTheme.dart';
 import 'package:movies/feature/auth/domain/repo/auth_repo.dart';
 import 'package:movies/feature/auth/presentation/manager/cubit/auth_cubit.dart';
-import 'package:movies/feature/favorite/data/data_source/favorite_remote_data_source.dart';
+import 'package:movies/feature/favorite/domain/repos/favorite_repo.dart';
 import 'package:movies/feature/favorite/presentation/manager/cubit/favorite_cubit.dart';
-import 'package:movies/feature/list/data/data_source/watched_list_remote_data_source.dart';
+import 'package:movies/feature/list/domain/repos/watched_list_repo.dart';
 import 'package:movies/feature/list/presentation/manager/cubit/watched_list_cubit.dart';
 import 'package:movies/main_view.dart';
 import 'package:movies/feature/on_bording/presentation/view/on_bording.dart';
@@ -45,13 +45,13 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (context) => AuthCubit(getIt.get<AuthRepo>())),
             BlocProvider(
               create: (context) => WatchedListCubit(
-                getIt.get<WatchedListRemotDataSource>(),
+                getIt.get<WatchedListRepo>(),
                 getIt.get<WatchedListMovies>(),
               ),
             ),
              BlocProvider(
           create: (BuildContext context) => FavoriteCubit(
-            getIt.get<FavoriteRemoteDataSource>(),
+            getIt.get<FavoriteRepo>(),
             getIt.get<FavoriteMovie>(),
           ),
         ),

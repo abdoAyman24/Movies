@@ -62,7 +62,10 @@ class _LoginViewFormState extends State<LoginViewForm> {
           BlocConsumer<AuthCubit, AuthState>(
             listener: (context, state) {
               if (state is SignInSuccess) {
-                showMessage(context, 'SignIn Success');
+                
+                 Navigator.of(
+                        context,
+                      ).pushReplacementNamed(MainView.routeName);
               }
               if (state is AuthFailure) {
                 showMessage(context, state.errorMessage);
@@ -72,14 +75,7 @@ class _LoginViewFormState extends State<LoginViewForm> {
               if (state is AuthInLoad) {
                 return CustomButton(
                   onTap: () {
-                    if (_globalKey.currentState!.validate()) {
-                      _globalKey.currentState!.save();
-                      _autovalidateMode = AutovalidateMode.disabled;
-                      context.read<AuthCubit>().siginWithEmailAndPassword(
-                        email: email,
-                        password: password,
-                      );
-                    }
+                    
                   },
                   text: 'Login',
                   isLoding: true,
@@ -94,9 +90,7 @@ class _LoginViewFormState extends State<LoginViewForm> {
                         email: email,
                         password: password,
                       );
-                      Navigator.of(
-                        context,
-                      ).pushReplacementNamed(MainView.routeName);
+                     
                     }
                   },
                   isLoding: false,

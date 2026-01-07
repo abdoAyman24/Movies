@@ -24,6 +24,8 @@ final class FavoriteSuccess extends FavoriteState {
 
 final class FavoriteFailure extends FavoriteState {
   final String errorMessage;
+  final IconData icon;
 
-  FavoriteFailure({required this.errorMessage});
+
+  FavoriteFailure( { required this.icon,required this.errorMessage});
 }

@@ -1,23 +1,24 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/widgets.dart';
 import 'package:movies/core/helper/favorite_movie.dart';
-import 'package:movies/feature/favorite/data/data_source/favorite_remote_data_source.dart';
+import 'package:movies/feature/favorite/domain/repos/favorite_repo.dart';
 import 'package:movies/feature/home/domain/entity/movie_entity.dart';
 
 part 'favorite_state.dart';
 
 class FavoriteCubit extends Cubit<FavoriteState> {
-  FavoriteCubit(this.favoriteRemoteDataSource, this.favoriteMovie)
+  FavoriteCubit(this.favoriteRepo, this.favoriteMovie)
     : super(FavoriteInitial());
-  final FavoriteRemoteDataSource favoriteRemoteDataSource;
+  final FavoriteRepo favoriteRepo;
   final FavoriteMovie favoriteMovie;
   void featchFavoriteMovies() async {
     emit(FavoriteLoad());
  favoriteMovie.removeAllMovieFromFavorite();
-    var result = await favoriteRemoteDataSource.featchFavotriteMovies();
+    var result = await favoriteRepo.featchFavotriteMovies();
     result.fold(
       (l) {
-        emit(FavoriteFailure(errorMessage: l.message));
+        emit(FavoriteFailure(errorMessage: l.message,icon: l.icon));
       },
       (r) {
         favoriteMovie.addListOfMoviesToFavorite(r);
@@ -29,12 +30,12 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   void addMovieToFavorite(MovieEntity movie) async {
     emit(FavoriteLoad());
     
-    var result = await favoriteRemoteDataSource.addToFavorite(
+    var result = await favoriteRepo.addToFavorite(
       movieId: movie.id,
     );
     result.fold(
       (l) {
-        emit(FavoriteFailure(errorMessage: l.message));
+        emit(FavoriteFailure(errorMessage: l.message,icon: l.icon));
       },
       (r) {
         favoriteMovie.addMovieToFavorite(movie);
@@ -46,12 +47,12 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   void deleteFromFavorite(MovieEntity movie) async {
     emit(FavoriteLoad());
 
-    var result = await favoriteRemoteDataSource.deleteFromFavorite(
+    var result = await favoriteRepo.deleteFromFavorite(
       movieId: movie.id,
     );
     result.fold(
       (l) {
-        emit(FavoriteFailure(errorMessage: l.message));
+        emit(FavoriteFailure(errorMessage: l.message,icon: l.icon));
       },
       (r) {
         favoriteMovie.removeMovieFromFavorite(movie);

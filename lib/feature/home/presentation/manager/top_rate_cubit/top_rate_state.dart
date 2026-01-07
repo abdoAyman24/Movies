@@ -8,15 +8,17 @@ sealed class TopRateState extends Equatable {
 }
 
 final class TopRateInitial extends TopRateState {}
+
 final class TopRateLoad extends TopRateState {}
+
 final class TopRateSuccess extends TopRateState {
   final List<MovieEntity> movies;
 
   TopRateSuccess({required this.movies});
 }
+
 final class TopRateFailure extends TopRateState {
   final String errorMessage;
-
-  TopRateFailure({required this.errorMessage});
+  final IconData icon;
+  TopRateFailure( {required this.icon, required this.errorMessage});
 }
-

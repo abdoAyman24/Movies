@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:movies/feature/home/domain/entity/movie_entity.dart';
 
@@ -23,11 +22,9 @@ class FavoriteMovie {
   bool isExist(MovieEntity movie) {
     for (var element in favoriteMovies) {
       if (element == movie) {
-        log('Success add to favorite');
         return true;
       }
     }
-    log('Success delete from favorite');
     return false;
   }
 }

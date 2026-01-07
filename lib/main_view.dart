@@ -6,7 +6,7 @@ import 'package:movies/core/service/service_locator.dart';
 import 'package:movies/core/utils/app_color.dart';
 import 'package:movies/feature/Profile/presentation/view/profile.dart';
 import 'package:movies/feature/favorite/presentation/manager/cubit/favorite_cubit.dart';
-import 'package:movies/feature/home/data/data_source/home_remote_data_source.dart';
+import 'package:movies/feature/home/domain/repos/home_repo.dart';
 import 'package:movies/feature/home/presentation/manager/now_play_cubit/now_play_cubit.dart';
 import 'package:movies/feature/home/presentation/manager/popular_cubit/popular_cubit.dart';
 import 'package:movies/feature/home/presentation/manager/top_rate_cubit/top_rate_cubit.dart';
@@ -39,15 +39,15 @@ class _MainViewState extends State<MainView> {
       providers: [
         BlocProvider(
           create: (BuildContext context) =>
-              NowPlayCubit(getIt.get<HomeRemoteDataSource>()),
+              NowPlayCubit(getIt.get<HomeRepo>()),
         ),
         BlocProvider(
           create: (BuildContext context) =>
-              PopularCubit(getIt.get<HomeRemoteDataSource>()),
+              PopularCubit(getIt.get<HomeRepo>()),
         ),
         BlocProvider(
           create: (BuildContext context) =>
-              TopRateCubit(getIt.get<HomeRemoteDataSource>()),
+              TopRateCubit(getIt.get<HomeRepo>()),
         ),
       ],
       child: Scaffold(

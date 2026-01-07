@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies/core/utils/app_text_styles.dart';
 import 'package:movies/core/widget/custom_back_ground.dart';
 import 'package:movies/feature/Profile/presentation/view/widget/profile_account_data.dart';
 import 'package:movies/feature/Profile/presentation/view/widget/profile_premium.dart';
@@ -17,8 +18,10 @@ class ProfileView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(height: 15),
+              Text('Profile ', style: AppText.bold28),
               const SizedBox(height: 20),
-               ProfileUserData(),
+              ProfileUserData(),
               const SizedBox(height: 20),
 
               ProfilePremium(),

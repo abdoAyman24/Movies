@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,7 +23,6 @@ class AddMovieToFavoriteWidget extends StatelessWidget {
         listener: (context, state) {
           if (state is SuccessAddMoviesToFavorite ||
               state is RemoveMovieFromFavorite) {
-            log('feat favorite');
             context.read<FavoriteCubit>().featchFavoriteMovies();
           }
         },

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:movies/core/widget/custom_cach_network_image.dart';
+import 'package:movies/core/widget/custom_image.dart';
 import 'package:movies/feature/home/domain/entity/movie_entity.dart';
 import 'package:movies/feature/home/presentation/view/widget/movie_detailes.dart';
 
 class MoviesListView extends StatelessWidget {
-  const MoviesListView({super.key, required this.movies});
+  const MoviesListView({super.key, required this.movies,this.isLoad=false});
   final List<MovieEntity> movies;
+  final bool  isLoad;
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -21,10 +23,10 @@ class MoviesListView extends StatelessWidget {
                 Navigator.pushNamed(
                   context,
                   MovieDetailes.routeName,
-                  arguments:movies[index],
+                  arguments: movies[index],
                 );
               },
-              child: CustomCachNetworkImage(imageUrl: movies[index].posterPath),
+              child:isLoad?CustomImage(): CustomCachNetworkImage(imageUrl: movies[index].posterPath),
             ),
           ),
         );

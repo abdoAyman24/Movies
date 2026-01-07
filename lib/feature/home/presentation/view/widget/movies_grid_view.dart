@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies/core/utils/app_color.dart';
+import 'package:movies/core/utils/app_text_styles.dart';
 import 'package:movies/core/widget/custom_back_ground.dart';
 import 'package:movies/feature/home/domain/entity/movie_entity.dart';
 import 'package:movies/core/widget/custom_movies_grid_view_body.dart';
@@ -24,10 +25,32 @@ class _MoviesGridViewState extends State<MoviesGridView> {
       body: Stack(
         children: [
           CustomBackGround(),
-          CustomMoviesGridViewBody(
-            movies: widget.movies,
-            movieFilter: movieFilter,
-          ),
+          widget.movies.isNotEmpty
+              ? CustomMoviesGridViewBody(
+                  movies: widget.movies,
+                  movieFilter: movieFilter,
+                )
+              : Column(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.error_outline, size: 50),
+                            const SizedBox(height: 15),
+                            Text(
+                              'ops,SomeThing Wronge Please Try Again',
+                              style: AppText.medium16,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
         ],
       ),
     );

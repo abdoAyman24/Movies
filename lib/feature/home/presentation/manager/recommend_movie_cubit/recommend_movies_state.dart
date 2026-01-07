@@ -19,6 +19,6 @@ final class RecommendMoviesSuccess extends RecommendMoviesState {
 
 final class RecommendMoviesFailure extends RecommendMoviesState {
   final String errorMessage;
-
-  RecommendMoviesFailure({required this.errorMessage});
+  final IconData icon;
+  RecommendMoviesFailure({required this.icon,required this.errorMessage});
 }
